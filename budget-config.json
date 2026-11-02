@@ -1,10 +1,137 @@
 {
-  "previsions": [],
+  "previsions": [
+    {
+      "id": "1793622117522",
+      "title": "CATG",
+      "amount": 2567.72,
+      "type": "income",
+      "day": 24,
+      "category": "Salaire",
+      "order": 1
+    },
+    {
+      "id": "1793622223050",
+      "title": "Bouygues Télécom Tel Stéph",
+      "amount": 55.6,
+      "type": "expense",
+      "day": 30,
+      "category": "Abonnements",
+      "order": 2
+    },
+    {
+      "id": "1793622260770",
+      "title": "Bouygues Télécom Bbox Fibre",
+      "amount": 44.39,
+      "type": "expense",
+      "day": 30,
+      "category": "Abonnements",
+      "order": 3
+    },
+    {
+      "id": "1793622284004",
+      "title": "Bouygues Télécom Flo",
+      "amount": 22.99,
+      "type": "expense",
+      "day": 30,
+      "category": "Abonnements",
+      "order": 4
+    },
+    {
+      "id": "1793622315612",
+      "title": "Location garage",
+      "amount": 132,
+      "type": "expense",
+      "day": 1,
+      "category": "Logement",
+      "order": 5
+    },
+    {
+      "id": "1793622347208",
+      "title": "GMPA - Allianz",
+      "amount": 40.37,
+      "type": "expense",
+      "day": 1,
+      "category": "Assurance",
+      "order": 6
+    },
+    {
+      "id": "1793622382304",
+      "title": "Prêt Igesa",
+      "amount": 131.33,
+      "type": "expense",
+      "day": 1,
+      "category": "Crédit",
+      "order": 7
+    },
+    {
+      "id": "1793622405231",
+      "title": "BPCE Vie - Assurance vie",
+      "amount": 8.9,
+      "type": "expense",
+      "day": 1,
+      "category": "Assurance",
+      "order": 8
+    },
+    {
+      "id": "1793622457852",
+      "title": "Placement - BPCE Vie",
+      "amount": 104.04,
+      "type": "expense",
+      "day": 5,
+      "category": "Placement",
+      "order": 9
+    },
+    {
+      "id": "1793622746488",
+      "title": "ENI",
+      "amount": 101.04,
+      "type": "expense",
+      "day": 5,
+      "category": "Factures",
+      "order": 10
+    },
+    {
+      "id": "1793622770654",
+      "title": "Placement PER - BPCE Vie",
+      "amount": 100,
+      "type": "expense",
+      "day": 5,
+      "category": "Placement",
+      "order": 11
+    },
+    {
+      "id": "1793622811977",
+      "title": "UNEO",
+      "amount": 3.28,
+      "type": "expense",
+      "day": 5,
+      "category": "Assurance",
+      "order": 12
+    },
+    {
+      "id": "1793622837985",
+      "title": "GMF Assurances",
+      "amount": 209.99,
+      "type": "expense",
+      "day": 5,
+      "category": "Assurance",
+      "order": 13
+    },
+    {
+      "id": "1793622860980",
+      "title": "Netflix",
+      "amount": 14.99,
+      "type": "expense",
+      "day": 5,
+      "category": "Abonnements",
+      "order": 14
+    }
+  ],
   "operations": [
     {
       "id": "1724457600001",
       "title": "CATG",
-      "amount": 2527.40,
+      "amount": 2527.4,
       "type": "income",
       "date": "2026-08-24",
       "category": "Salaire / Revenu",
@@ -13,7 +140,7 @@
     {
       "id": "1724457600002",
       "title": "Axel",
-      "amount": 60.00,
+      "amount": 60,
       "type": "income",
       "date": "2026-08-24",
       "category": "Salaire / Revenu",
@@ -22,7 +149,7 @@
     {
       "id": "1724716800001",
       "title": "Antony",
-      "amount": 12.00,
+      "amount": 12,
       "type": "expense",
       "date": "2026-08-27",
       "category": "Autre",
@@ -58,7 +185,7 @@
     {
       "id": "1725148800001",
       "title": "Location garage",
-      "amount": 132.00,
+      "amount": 132,
       "type": "expense",
       "date": "2026-09-01",
       "category": "Logement",
@@ -85,7 +212,7 @@
     {
       "id": "1725148800004",
       "title": "BPCE Vie - Assurance vie",
-      "amount": 8.90,
+      "amount": 8.9,
       "type": "expense",
       "date": "2026-09-01",
       "category": "Assurance",
@@ -103,7 +230,7 @@
     {
       "id": "1725148800006",
       "title": "Livret A",
-      "amount": 850.00,
+      "amount": 850,
       "type": "income",
       "date": "2026-09-01",
       "category": "Salaire / Revenu",
@@ -148,7 +275,7 @@
     {
       "id": "1725408000002",
       "title": "Clinique de l'Atlantique",
-      "amount": 250.00,
+      "amount": 250,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Santé",
@@ -175,7 +302,7 @@
     {
       "id": "1725408000005",
       "title": "Bitstack",
-      "amount": 2.50,
+      "amount": 2.5,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Placement",
@@ -193,7 +320,7 @@
     {
       "id": "1725408000007",
       "title": "Contrôle technique Swift",
-      "amount": 70.00,
+      "amount": 70,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Transport / Carburant",
@@ -202,7 +329,7 @@
     {
       "id": "1725408000008",
       "title": "Leclerc",
-      "amount": 17.50,
+      "amount": 17.5,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Alimentation / Courses",
@@ -265,7 +392,7 @@
     {
       "id": "1725408000015",
       "title": "Sushi leclerc",
-      "amount": 21.00,
+      "amount": 21,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Alimentation / Courses",
@@ -274,7 +401,7 @@
     {
       "id": "1725408000016",
       "title": "Bitstack",
-      "amount": 31.60,
+      "amount": 31.6,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Placement",
@@ -301,7 +428,7 @@
     {
       "id": "1725408000019",
       "title": "Bugat",
-      "amount": 183.70,
+      "amount": 183.7,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Loisirs / Sorties",
@@ -310,7 +437,7 @@
     {
       "id": "1725408000020",
       "title": "Bugat",
-      "amount": 90.20,
+      "amount": 90.2,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Loisirs / Sorties",
@@ -319,7 +446,7 @@
     {
       "id": "1725408000021",
       "title": "Café de la paix",
-      "amount": 38.00,
+      "amount": 38,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Loisirs / Sorties",
@@ -391,7 +518,7 @@
     {
       "id": "1725408000029",
       "title": "Bugat",
-      "amount": 41.60,
+      "amount": 41.6,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Loisirs / Sorties",
@@ -409,7 +536,7 @@
     {
       "id": "1725408000031",
       "title": "Bitstack",
-      "amount": 3.00,
+      "amount": 3,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Placement",
@@ -427,7 +554,7 @@
     {
       "id": "1725408000033",
       "title": "Quai au vivres",
-      "amount": 70.50,
+      "amount": 70.5,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Loisirs / Sorties",
@@ -436,7 +563,7 @@
     {
       "id": "1725408000034",
       "title": "Quai au vivres",
-      "amount": 14.00,
+      "amount": 14,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Loisirs / Sorties",
@@ -454,7 +581,7 @@
     {
       "id": "1725408000036",
       "title": "Dr Lemaire",
-      "amount": 61.00,
+      "amount": 61,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Santé",
@@ -463,7 +590,7 @@
     {
       "id": "1725408000037",
       "title": "Bitstack",
-      "amount": 1.00,
+      "amount": 1,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Placement",
@@ -472,7 +599,7 @@
     {
       "id": "1725408000038",
       "title": "Livret A",
-      "amount": 240.00,
+      "amount": 240,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Placement",
@@ -481,7 +608,7 @@
     {
       "id": "1725408000039",
       "title": "Livret A",
-      "amount": 100.00,
+      "amount": 100,
       "type": "income",
       "date": "2026-09-04",
       "category": "Salaire / Revenu",
@@ -490,7 +617,7 @@
     {
       "id": "1725408000040",
       "title": "Flo",
-      "amount": 100.00,
+      "amount": 100,
       "type": "expense",
       "date": "2026-09-04",
       "category": "Autre",
@@ -499,7 +626,7 @@
     {
       "id": "1725494400001",
       "title": "Axel",
-      "amount": 50.00,
+      "amount": 50,
       "type": "income",
       "date": "2026-09-05",
       "category": "Salaire / Revenu",
@@ -508,7 +635,7 @@
     {
       "id": "1725580800001",
       "title": "Placement PER - BPCE Vie",
-      "amount": 100.00,
+      "amount": 100,
       "type": "expense",
       "date": "2026-09-07",
       "category": "Placement",
@@ -571,7 +698,7 @@
     {
       "id": "1725667200001",
       "title": "Livret A",
-      "amount": 16.00,
+      "amount": 16,
       "type": "income",
       "date": "2026-09-08",
       "category": "Salaire / Revenu",
@@ -580,7 +707,7 @@
     {
       "id": "1725926400001",
       "title": "Livret A",
-      "amount": 340.00,
+      "amount": 340,
       "type": "income",
       "date": "2026-09-10",
       "category": "Salaire / Revenu",
@@ -591,7 +718,7 @@
       "title": "Endodentiste",
       "amount": 330.36,
       "type": "expense",
-      "date": "2026-09-10",
+      "date": "2026-09-19",
       "category": "Santé",
       "pointed": true
     },
@@ -625,7 +752,7 @@
     {
       "id": "1726444800003",
       "title": "Livret A",
-      "amount": 140.00,
+      "amount": 140,
       "type": "expense",
       "date": "2026-09-16",
       "category": "Placement",
@@ -634,7 +761,7 @@
     {
       "id": "1726444800004",
       "title": "Bouquet Liberté CE",
-      "amount": 21.30,
+      "amount": 21.3,
       "type": "expense",
       "date": "2026-09-16",
       "category": "Abonnements",
@@ -652,11 +779,314 @@
     {
       "id": "1726531200002",
       "title": "Livret A",
-      "amount": 90.00,
+      "amount": 90,
       "type": "expense",
       "date": "2026-09-17",
       "category": "Placement",
       "pointed": true
+    },
+    {
+      "id": "1793623063240",
+      "title": "CATG",
+      "amount": 2567.72,
+      "type": "income",
+      "date": "2026-09-24",
+      "category": "Salaire",
+      "pointed": true,
+      "previsionId": "1793622117522"
+    },
+    {
+      "id": "1793623087635",
+      "title": "Bouygues Télécom Tel Stéph",
+      "amount": 55.6,
+      "type": "expense",
+      "date": "2026-09-28",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1793622223050"
+    },
+    {
+      "id": "1793623088888",
+      "title": "Bouygues Télécom Bbox Fibre",
+      "amount": 44.39,
+      "type": "expense",
+      "date": "2026-09-28",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1793622260770"
+    },
+    {
+      "id": "1793623089710",
+      "title": "Bouygues Télécom Flo",
+      "amount": 22.99,
+      "type": "expense",
+      "date": "2026-09-28",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1793622284004"
+    },
+    {
+      "id": "1793623148645",
+      "title": "Flo",
+      "amount": 100,
+      "type": "expense",
+      "date": "2026-10-01",
+      "category": "Autre",
+      "pointed": true
+    },
+    {
+      "id": "1793623197613",
+      "title": "Location garage",
+      "amount": 132,
+      "type": "expense",
+      "date": "2026-10-01",
+      "category": "Logement",
+      "pointed": true,
+      "previsionId": "1793622315612"
+    },
+    {
+      "id": "1793623204741",
+      "title": "GMPA - Allianz",
+      "amount": 40.37,
+      "type": "expense",
+      "date": "2026-10-01",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1793622347208"
+    },
+    {
+      "id": "1793623207614",
+      "title": "Prêt Igesa",
+      "amount": 131.33,
+      "type": "expense",
+      "date": "2026-10-01",
+      "category": "Crédit",
+      "pointed": true,
+      "previsionId": "1793622382304"
+    },
+    {
+      "id": "1793623210030",
+      "title": "BPCE Vie - Assurance vie",
+      "amount": 8.9,
+      "type": "expense",
+      "date": "2026-10-01",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1793622405231"
+    },
+    {
+      "id": "1793623212823",
+      "title": "Placement - BPCE Vie",
+      "amount": 104.04,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Placement",
+      "pointed": true,
+      "previsionId": "1793622457852"
+    },
+    {
+      "id": "1793623233721",
+      "title": "CT 2026 - Catherine",
+      "amount": 30,
+      "type": "expense",
+      "date": "2026-10-01",
+      "category": "Transport",
+      "pointed": true
+    },
+    {
+      "id": "1793623272906",
+      "title": "Livret A",
+      "amount": 215,
+      "type": "income",
+      "date": "2026-10-04",
+      "category": "Salaire",
+      "pointed": true
+    },
+    {
+      "id": "1793623295345",
+      "title": "Axel",
+      "amount": 70,
+      "type": "income",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623395132",
+      "title": "ENI",
+      "amount": 101.04,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Factures",
+      "pointed": true,
+      "previsionId": "1793622746488"
+    },
+    {
+      "id": "1793623414678",
+      "title": "Placement PER - BPCE Vie",
+      "amount": 100,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Placement",
+      "pointed": true,
+      "previsionId": "1793622770654"
+    },
+    {
+      "id": "1793623416085",
+      "title": "UNEO",
+      "amount": 3.28,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1793622811977"
+    },
+    {
+      "id": "1793623432566",
+      "title": "GMF Assurances",
+      "amount": 209.99,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1793622837985"
+    },
+    {
+      "id": "1793623434750",
+      "title": "Netflix",
+      "amount": 14.99,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1793622860980"
+    },
+    {
+      "id": "1793623472136",
+      "title": "Arkose",
+      "amount": 145,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Loisirs",
+      "pointed": true
+    },
+    {
+      "id": "1793623493375",
+      "title": "Intermarché",
+      "amount": 64.58,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Transport",
+      "pointed": true
+    },
+    {
+      "id": "1793623554915",
+      "title": "BurgerKing",
+      "amount": 9.9,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623586902",
+      "title": "Bitstack",
+      "amount": 20,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Placement",
+      "pointed": true
+    },
+    {
+      "id": "1793623622455",
+      "title": "Netto",
+      "amount": 11.84,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623656181",
+      "title": "Fresh",
+      "amount": 32.17,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623680023",
+      "title": "Intermarché",
+      "amount": 5.34,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623713263",
+      "title": "Vétérinaire",
+      "amount": 71.9,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Autre",
+      "pointed": true
+    },
+    {
+      "id": "1793623751738",
+      "title": "Leclerc",
+      "amount": 109.64,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623777276",
+      "title": "Amazon (Epices cajun)",
+      "amount": 9.95,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623799514",
+      "title": "Bitstack",
+      "amount": 27.16,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Placement",
+      "pointed": true
+    },
+    {
+      "id": "1793623824395",
+      "title": "Leclerc",
+      "amount": 41.64,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
+    },
+    {
+      "id": "1793623853812",
+      "title": "Dr Gendreau Flo",
+      "amount": 30,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Santé",
+      "pointed": true
+    },
+    {
+      "id": "1793624543476",
+      "title": "Super U",
+      "amount": 145.47,
+      "type": "expense",
+      "date": "2026-10-05",
+      "category": "Alimentation",
+      "pointed": true
     }
-  ]
+  ],
+  "lastUpdate": "2026-11-02T13:02:37.486Z"
 }
