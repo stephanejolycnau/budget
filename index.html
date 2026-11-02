@@ -26,11 +26,11 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold leading-tight">Mon Budget Personnel</h1>
-                    <p class="text-xs text-slate-400">Mode 100% GitHub JSON</p>
+                    <p class="text-xs text-slate-400">Sync Automatique GitHub</p>
                 </div>
             </div>
 
-            <!-- Filtre Mois/Année & Export JSON -->
+            <!-- Filtre Mois/Année & Sync GitHub -->
             <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
                 <div class="flex items-center gap-1 bg-slate-800 p-1.5 rounded-lg border border-slate-700">
                     <i data-lucide="calendar" class="w-4 h-4 text-slate-400 ml-1"></i>
@@ -53,12 +53,15 @@
                 </div>
 
                 <div class="flex gap-1 items-center bg-slate-800/80 p-1 rounded-lg border border-slate-700">
-                    <button onclick="exportJSONConfig()" title="Télécharger le fichier JSON pour GitHub" class="p-2 text-slate-300 hover:text-white rounded-md transition-colors flex items-center gap-1 text-xs font-medium">
-                        <i data-lucide="download" class="w-4 h-4 text-amber-400"></i>
-                        <span class="hidden sm:inline">Télécharger JSON</span>
+                    <button onclick="syncToGitHub()" title="Sauvegarder directement sur GitHub" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors flex items-center gap-1.5 text-xs font-semibold shadow-sm">
+                        <i data-lucide="cloud-upload" class="w-4 h-4"></i>
+                        <span>Enregistrer sur Git</span>
                     </button>
                     <button onclick="loadFromGitHub()" title="Recharger depuis GitHub" class="p-2 text-slate-400 hover:text-indigo-400 rounded-md transition-colors border-l border-slate-700">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="configureToken()" title="Configurer le Token" class="p-2 text-slate-400 hover:text-amber-400 rounded-md transition-colors">
+                        <i data-lucide="key" class="w-4 h-4"></i>
                     </button>
                 </div>
             </div>
@@ -314,12 +317,38 @@
         let previsions = [];
         let operations = [];
 
+        // PARAMÈTRES À CONFIGURER (ou saisis via l'icône clé)
+        // Remplace 'ton-pseudo' et 'nom-du-repo' par tes vraies informations GitHub si tu ne veux pas utiliser l'icône clé.
+        let ghConfig = {
+            owner: localStorage.getItem('gh_owner') || 'ton-pseudo',
+            repo: localStorage.getItem('gh_repo') || 'nom-du-repo',
+            token: localStorage.getItem('gh_token') || ''
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             initDateSelectors();
             loadFromGitHub();
         });
 
-        // Chargement direct du fichier JSON hébergé sur GitHub (sans LocalStorage)
+        function configureToken() {
+            const token = prompt("Colle ton Personal Access Token GitHub (commençant par github_pat_) :", ghConfig.token);
+            if (token !== null) {
+                ghConfig.token = token.trim();
+                localStorage.setItem('gh_token', ghConfig.token);
+            }
+            const owner = prompt("Entre ton pseudo GitHub (propriétaire du dépôt) :", ghConfig.owner);
+            if (owner !== null) {
+                ghConfig.owner = owner.trim();
+                localStorage.setItem('gh_owner', ghConfig.owner);
+            }
+            const repo = prompt("Entre le nom de ton dépôt GitHub (ex: mon-budget) :", ghConfig.repo);
+            if (repo !== null) {
+                ghConfig.repo = repo.trim();
+                localStorage.setItem('gh_repo', ghConfig.repo);
+            }
+            alert("Configuration enregistrée sur cet appareil !");
+        }
+
         function loadFromGitHub() {
             fetch('budget-config.json?v=' + Date.now())
                 .then(response => {
@@ -334,6 +363,58 @@
                 .catch(err => {
                     console.error('Erreur :', err);
                 });
+        }
+
+        async function syncToGitHub() {
+            if (!ghConfig.token || !ghConfig.owner || !ghConfig.repo || ghConfig.owner === 'ton-pseudo') {
+                configureToken();
+                if (!ghConfig.token) return;
+            }
+
+            const dataToSave = {
+                previsions,
+                operations,
+                lastUpdate: new Date().toISOString()
+            };
+
+            const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
+            const url = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/budget-config.json`;
+
+            try {
+                // 1. Récupérer le SHA actuel du fichier sur GitHub (nécessaire pour l'API GitHub)
+                const getRes = await fetch(url, {
+                    headers: { 'Authorization': `token ${ghConfig.token}` }
+                });
+                
+                let sha = '';
+                if (getRes.ok) {
+                    const fileData = await getRes.json();
+                    sha = fileData.sha;
+                }
+
+                // 2. Envoyer la mise à jour
+                const putRes = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${ghConfig.token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: "Mise à jour automatique du budget depuis l'application web",
+                        content: contentEncoded,
+                        sha: sha
+                    })
+                });
+
+                if (putRes.ok) {
+                    alert("✔ Synchronisation réussie sur GitHub ! Les autres appareils ont maintenant accès à ces données.");
+                } else {
+                    const errJson = await putRes.json();
+                    alert("Erreur lors de la sync : " + (errJson.message || putRes.statusText));
+                }
+            } catch (e) {
+                alert("Erreur réseau : " + e.message);
+            }
         }
 
         function initDateSelectors() {
@@ -692,21 +773,6 @@
                 operations = operations.filter(o => o.id !== id);
                 renderApp();
             }
-        }
-
-        function exportJSONConfig() {
-            const data = {
-                previsions,
-                operations,
-                lastUpdate: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `budget-config.json`;
-            a.click();
-            URL.revokeObjectURL(url);
         }
 
         function formatCurrency(val) {
