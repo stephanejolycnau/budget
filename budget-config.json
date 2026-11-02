@@ -1,25 +1,244 @@
-[
-  { "id": "1", "title": "Virement (CATG)", "amount": 2450.00, "type": "income", "day": 24, "order": 1, "category": "Salaire" },
-  { "id": "2", "title": "Bouygues Télécom Bbox Fibre", "amount": 42.99, "type": "expense", "day": 25, "order": 2, "category": "Abonnements" },
-  { "id": "3", "title": "Bouygues Télécom Tel Stéph", "amount": 46.99, "type": "expense", "day": 25, "order": 3, "category": "Abonnements" },
-  { "id": "4", "title": "Bouygues Télécom Tel Flo", "amount": 22.99, "type": "expense", "day": 25, "order": 4, "category": "Abonnements" },
-  { "id": "5", "title": "Prêt Igesa (20/24)", "amount": 131.33, "type": "expense", "day": 25, "order": 5, "category": "Logement" },
-  { "id": "6", "title": "Location garage", "amount": 132.00, "type": "expense", "day": 25, "order": 6, "category": "Logement" },
-  { "id": "7", "title": "AGPM - Allianz", "amount": 8.90, "type": "expense", "day": 1, "order": 7, "category": "Assurance" },
-  { "id": "8", "title": "GMPA-Allianz", "amount": 40.37, "type": "expense", "day": 2, "order": 8, "category": "Assurance" },
-  { "id": "9", "title": "GMF Assurances", "amount": 209.99, "type": "expense", "day": 3, "order": 9, "category": "Assurance" },
-  { "id": "10", "title": "Placement PER - BPCE Vie", "amount": 100.00, "type": "expense", "day": 3, "order": 10, "category": "Autre" },
-  { "id": "11", "title": "Placement - BPCE Vie", "amount": 104.04, "type": "expense", "day": 3, "order": 11, "category": "Autre" },
-  { "id": "12", "title": "BPCE Vie - Assurance vie", "amount": 9.39, "type": "expense", "day": 3, "order": 12, "category": "Assurance" },
-  { "id": "13", "title": "Prévision courses", "amount": 800.00, "type": "expense", "day": 5, "order": 13, "category": "Alimentation" },
-  { "id": "14", "title": "Bitstack", "amount": 80.00, "type": "expense", "day": 5, "order": 14, "category": "Autre" },
-  { "id": "15", "title": "Netflix", "amount": 14.99, "type": "expense", "day": 5, "order": 15, "category": "Abonnements" },
-  { "id": "16", "title": "ENI", "amount": 101.04, "type": "expense", "day": 5, "order": 16, "category": "Factures" },
-  { "id": "17", "title": "UNEO", "amount": 3.28, "type": "expense", "day": 5, "order": 17, "category": "Assurance" },
-  { "id": "18", "title": "Crédit CE", "amount": 134.04, "type": "expense", "day": 6, "order": 18, "category": "Autre" },
-  { "id": "19", "title": "Ordures ménagères (11/12)", "amount": 26.85, "type": "expense", "day": 7, "order": 20, "category": "Factures" },
-  { "id": "20", "title": "Bouquet Liberté CE", "amount": 21.30, "type": "expense", "day": 10, "order": 21, "category": "Abonnements" },
-  { "id": "21", "title": "Assurance 206 Catherine", "amount": 15.57, "type": "expense", "day": 15, "order": 22, "category": "Assurance" },
-  { "id": "22", "title": "Virement Flo", "amount": 0.00, "type": "expense", "day": 15, "order": 23, "category": "Autre" },
-  { "id": "23", "title": "Virement Livret A", "amount": 0.00, "type": "expense", "day": 15, "order": 24, "category": "Autre" }
-]
+{
+  "previsions": [
+    {
+      "id": "1",
+      "title": "Virement (CATG)",
+      "amount": 2450,
+      "type": "income",
+      "day": 24,
+      "order": 1,
+      "category": "Salaire"
+    },
+    {
+      "id": "2",
+      "title": "Bouygues Télécom Bbox Fibre",
+      "amount": 42.99,
+      "type": "expense",
+      "day": 25,
+      "order": 2,
+      "category": "Abonnements"
+    },
+    {
+      "id": "3",
+      "title": "Bouygues Télécom Tel Stéph",
+      "amount": 46.99,
+      "type": "expense",
+      "day": 25,
+      "order": 3,
+      "category": "Abonnements"
+    },
+    {
+      "id": "4",
+      "title": "Bouygues Télécom Tel Flo",
+      "amount": 22.99,
+      "type": "expense",
+      "day": 25,
+      "order": 4,
+      "category": "Abonnements"
+    },
+    {
+      "id": "5",
+      "title": "Prêt Igesa (20/24)",
+      "amount": 131.33,
+      "type": "expense",
+      "day": 25,
+      "order": 5,
+      "category": "Logement"
+    },
+    {
+      "id": "6",
+      "title": "Location garage",
+      "amount": 132,
+      "type": "expense",
+      "day": 25,
+      "order": 6,
+      "category": "Logement"
+    },
+    {
+      "id": "7",
+      "title": "AGPM - Allianz",
+      "amount": 8.9,
+      "type": "expense",
+      "day": 1,
+      "order": 7,
+      "category": "Assurance"
+    },
+    {
+      "id": "8",
+      "title": "GMPA-Allianz",
+      "amount": 40.37,
+      "type": "expense",
+      "day": 2,
+      "order": 8,
+      "category": "Assurance"
+    },
+    {
+      "id": "9",
+      "title": "GMF Assurances",
+      "amount": 209.99,
+      "type": "expense",
+      "day": 3,
+      "order": 9,
+      "category": "Assurance"
+    },
+    {
+      "id": "10",
+      "title": "Placement PER - BPCE Vie",
+      "amount": 100,
+      "type": "expense",
+      "day": 3,
+      "order": 10,
+      "category": "Autre"
+    },
+    {
+      "id": "11",
+      "title": "Placement - BPCE Vie",
+      "amount": 104.04,
+      "type": "expense",
+      "day": 3,
+      "order": 11,
+      "category": "Autre"
+    },
+    {
+      "id": "12",
+      "title": "BPCE Vie - Assurance vie",
+      "amount": 9.39,
+      "type": "expense",
+      "day": 3,
+      "order": 12,
+      "category": "Assurance"
+    },
+    {
+      "id": "13",
+      "title": "Prévision courses",
+      "amount": 800,
+      "type": "expense",
+      "day": 5,
+      "order": 13,
+      "category": "Alimentation"
+    },
+    {
+      "id": "14",
+      "title": "Bitstack",
+      "amount": 80,
+      "type": "expense",
+      "day": 5,
+      "order": 14,
+      "category": "Autre"
+    },
+    {
+      "id": "15",
+      "title": "Netflix",
+      "amount": 14.99,
+      "type": "expense",
+      "day": 5,
+      "order": 15,
+      "category": "Abonnements"
+    },
+    {
+      "id": "16",
+      "title": "ENI",
+      "amount": 101.04,
+      "type": "expense",
+      "day": 5,
+      "order": 16,
+      "category": "Factures"
+    },
+    {
+      "id": "17",
+      "title": "UNEO",
+      "amount": 3.28,
+      "type": "expense",
+      "day": 5,
+      "order": 17,
+      "category": "Assurance"
+    },
+    {
+      "id": "18",
+      "title": "Crédit CE",
+      "amount": 134.04,
+      "type": "expense",
+      "day": 6,
+      "order": 18,
+      "category": "Autre"
+    },
+    {
+      "id": "19",
+      "title": "Ordures ménagères (11/12)",
+      "amount": 26.85,
+      "type": "expense",
+      "day": 7,
+      "order": 20,
+      "category": "Factures"
+    },
+    {
+      "id": "20",
+      "title": "Bouquet Liberté CE",
+      "amount": 21.3,
+      "type": "expense",
+      "day": 10,
+      "order": 21,
+      "category": "Abonnements"
+    },
+    {
+      "id": "21",
+      "title": "Assurance 206 Catherine",
+      "amount": 15.57,
+      "type": "expense",
+      "day": 15,
+      "order": 22,
+      "category": "Assurance"
+    },
+    {
+      "id": "22",
+      "title": "Virement Flo",
+      "amount": 0,
+      "type": "expense",
+      "day": 15,
+      "order": 23,
+      "category": "Autre"
+    },
+    {
+      "id": "23",
+      "title": "Virement Livret A",
+      "amount": 0,
+      "type": "expense",
+      "day": 15,
+      "order": 24,
+      "category": "Autre"
+    }
+  ],
+  "operations": [
+    {
+      "id": "1793619791111",
+      "title": "Virement (CATG)",
+      "amount": 2450,
+      "type": "income",
+      "date": "2026-11-24",
+      "category": "Salaire",
+      "pointed": true,
+      "previsionId": "1"
+    },
+    {
+      "id": "1793619792462",
+      "title": "Bouygues Télécom Bbox Fibre",
+      "amount": 42.99,
+      "type": "expense",
+      "date": "2026-11-25",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "2"
+    },
+    {
+      "id": "1793619793500",
+      "title": "Bouygues Télécom Tel Stéph",
+      "amount": 46.99,
+      "type": "expense",
+      "date": "2026-11-25",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "3"
+    }
+  ],
+  "lastUpdate": "2026-11-02T11:43:19.894Z"
+}
