@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Budget & Suivi Compte</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full font-sans text-slate-800 flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 p-2 rounded-xl">
+                    <i data-lucide="wallet" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold leading-tight">Mon Budget Personnel</h1>
+                    <p class="text-xs text-slate-400">Piloté par JSON & Stockage Local</p>
+                </div>
+            </div>
+
+            <!-- Filtre Mois/Année & Gestion JSON -->
+            <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
+                <div class="flex items-center gap-1 bg-slate-800 p-1.5 rounded-lg border border-slate-700">
+                    <i data-lucide="calendar" class="w-4 h-4 text-slate-400 ml-1"></i>
+                    <select id="select-month" onchange="renderApp()" class="bg-transparent text-sm font-medium text-white focus:outline-none cursor-pointer pr-2">
+                        <option value="0" class="bg-slate-800">Janvier</option>
+                        <option value="1" class="bg-slate-800">Février</option>
+                        <option value="2" class="bg-slate-800">Mars</option>
+                        <option value="3" class="bg-slate-800">Avril</option>
+                        <option value="4" class="bg-slate-800">Mai</option>
+                        <option value="5" class="bg-slate-800">Juin</option>
+                        <option value="6" class="bg-slate-800">Juillet</option>
+                        <option value="7" class="bg-slate-800">Août</option>
+                        <option value="8" class="bg-slate-800">Septembre</option>
+                        <option value="9" class="bg-slate-800">Octobre</option>
+                        <option value="10" class="bg-slate-800">Novembre</option>
+                        <option value="11" class="bg-slate-800">Décembre</option>
+                    </select>
+                    <select id="select-year" onchange="renderApp()" class="bg-transparent text-sm font-medium text-white focus:outline-none cursor-pointer border-l border-slate-700 pl-2 pr-1">
+                        <!-- Années dynamiques -->
+                    </select>
+                </div>
+
+                <div class="flex gap-1 items-center bg-slate-800/80 p-1 rounded-lg border border-slate-700">
+                    <button onclick="exportJSONConfig()" title="Télécharger le fichier JSON des prévisions" class="p-2 text-slate-300 hover:text-white rounded-md transition-colors flex items-center gap-1 text-xs font-medium">
+                        <i data-lucide="file-json" class="w-4 h-4 text-amber-400"></i>
+                        <span class="hidden sm:inline">JSON</span>
+                    </button>
+                    <label title="Importer/Remplacer par un fichier JSON" class="p-2 text-slate-300 hover:text-white rounded-md cursor-pointer transition-colors flex items-center gap-1 text-xs font-medium border-l border-slate-700">
+                        <i data-lucide="upload" class="w-4 h-4 text-indigo-400"></i>
+                        <input type="file" id="import-json-file" onchange="importJSONConfig(event)" class="hidden" accept=".json">
+                    </label>
+                    <button onclick="resetData()" title="Réinitialiser aux valeurs d'origine" class="p-2 text-slate-400 hover:text-rose-400 rounded-md transition-colors border-l border-slate-700">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Synthèse financière (Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Solde Réel / Pointé -->
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Réel (Pointé)</span>
+                    <div class="p-2 rounded-lg bg-blue-50 text-blue-600">
+                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div id="stat-solde-pointer" class="text-2xl font-bold text-slate-900">0,00 €</div>
+                <p class="text-xs text-slate-400 mt-1">Sur le compte bancaire</p>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
+            </div>
+
+            <!-- Prélèvements / Reste à venir -->
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Prévisions Restantes</span>
+                    <div class="p-2 rounded-lg bg-amber-50 text-amber-600">
+                        <i data-lucide="clock" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div id="stat-previs-restantes" class="text-2xl font-bold text-amber-600">0,00 €</div>
+                <p class="text-xs text-slate-400 mt-1"><span id="stat-previs-count">0</span> prévision(s) en attente</p>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
+            </div>
+
+            <!-- Solde Estimé Fin de Mois -->
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Estimé (Fin de mois)</span>
+                    <div class="p-2 rounded-lg bg-indigo-50 text-indigo-600">
+                        <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div id="stat-solde-estime" class="text-2xl font-bold text-indigo-600">0,00 €</div>
+                <p class="text-xs text-slate-400 mt-1">Réel + Prévisions + Opérations non pointées</p>
+                <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
+            </div>
+
+            <!-- Entrées & Sorties du mois -->
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Revenus mois</span>
+                    <span id="stat-revenus" class="text-sm font-bold text-emerald-600">+0,00 €</span>
+                </div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full my-2 overflow-hidden flex">
+                    <div id="bar-revenus" class="bg-emerald-500 h-full" style="width: 50%"></div>
+                    <div id="bar-depenses" class="bg-rose-500 h-full" style="width: 50%"></div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Dépenses mois</span>
+                    <span id="stat-depenses" class="text-sm font-bold text-rose-600">-0,00 €</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section Principale -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Colonne 1 : Entrées et prélèvements fixes -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-full">
+                <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 rounded-t-xl">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="repeat" class="w-5 h-5 text-indigo-600"></i>
+                        <h2 class="font-bold text-slate-800">Entrées et prélèvements fixes</h2>
+                    </div>
+                    <button onclick="openModalPrevision()" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Ajouter</span>
+                    </button>
+                </div>
+
+                <div class="p-3 bg-amber-50/60 border-b border-amber-100 text-xs text-amber-800 flex items-start gap-2">
+                    <i data-lucide="info" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+                    <span>Clique sur le bouton <strong>+</strong> pour injecter le prélèvement dans les opérations réelles du mois.</span>
+                </div>
+
+                <div class="divide-y divide-slate-100 flex-1 overflow-y-auto max-h-[500px]" id="list-previsions">
+                    <!-- Généré dynamiquement JS -->
+                </div>
+                
+                <div class="p-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-between items-center text-xs font-semibold text-slate-500">
+                    <span>Total prévisions/mois :</span>
+                    <span id="total-previsions" class="text-slate-800 font-bold">0,00 €</span>
+                </div>
+            </div>
+
+            <!-- Colonne 2 : Opérations Réelles -->
+            <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-full">
+                <div class="p-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3 bg-slate-50/50 rounded-t-xl">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="receipt" class="w-5 h-5 text-indigo-600"></i>
+                        <h2 class="font-bold text-slate-800">Opérations du mois</h2>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <!-- Barre de recherche -->
+                        <div class="relative">
+                            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
+                            <input type="text" id="search-input" oninput="renderApp()" placeholder="Rechercher..." class="pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 w-32 sm:w-48">
+                        </div>
+
+                        <!-- Bouton Ajouter Opération -->
+                        <button onclick="openModalOperation()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>Nouvelle opération</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table des opérations -->
+                <div class="overflow-x-auto flex-1">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-slate-50 text-xs text-slate-400 uppercase font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="p-3 text-center w-12">Pointé</th>
+                                <th class="p-3">Date</th>
+                                <th class="p-3">Libellé</th>
+                                <th class="p-3 hidden sm:table-cell">Catégorie</th>
+                                <th class="p-3 text-right">Montant</th>
+                                <th class="p-3 text-center w-20">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-operations" class="divide-y divide-slate-100">
+                            <!-- Généré dynamiquement JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="p-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-between items-center text-xs text-slate-500">
+                    <span id="count-operations">0 opération(s)</span>
+                    <div class="flex gap-4 font-semibold">
+                        <span>Pointé : <strong id="total-pointe" class="text-blue-600">0,00 €</strong></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Modal : Ajouter / Éditer une Prévision -->
+    <div id="modal-prevision" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden transform transition-all">
+            <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
+                <h3 id="modal-prev-title" class="font-bold text-base">Ajouter une entrée ou un prélèvement</h3>
+                <button onclick="closeModalPrevision()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="form-prevision" onsubmit="savePrevision(event)" class="p-5 space-y-4">
+                <input type="hidden" id="prev-id">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Libellé</label>
+                    <input type="text" id="prev-title" required placeholder="Loyer" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Montant (€)</label>
+                        <input type="number" step="0.01" id="prev-amount" required placeholder="500.00" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Type</label>
+                        <select id="prev-type" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white">
+                            <option value="expense">Dépense (-)</option>
+                            <option value="income">Revenu (+)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jour du mois (1-31)</label>
+                        <input type="number" min="1" max="31" id="prev-day" value="5" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Catégorie</label>
+                        <select id="prev-category" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white">
+                            <option value="Logement">Logement</option>
+                            <option value="Abonnements">Abonnements</option>
+                            <option value="Factures">Factures / Énergie</option>
+                            <option value="Transport">Transport / Auto</option>
+                            <option value="Assurance">Assurance</option>
+                            <option value="Salaire">Salaire / Revenu</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
+                    <button type="button" onclick="closeModalPrevision()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Annuler</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal : Ajouter / Éditer une Opération -->
+    <div id="modal-operation" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden transform transition-all">
+            <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
+                <h3 id="modal-op-title" class="font-bold text-base">Nouvelle opération</h3>
+                <button onclick="closeModalOperation()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="form-operation" onsubmit="saveOperation(event)" class="p-5 space-y-4">
+                <input type="hidden" id="op-id">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Libellé</label>
+                    <input type="text" id="op-title" required placeholder="Courses Leclerc, Plein Essence..." class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Montant (€)</label>
+                        <input type="number" step="0.01" id="op-amount" required placeholder="45.50" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Type</label>
+                        <select id="op-type" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white">
+                            <option value="expense">Dépense (-)</option>
+                            <option value="income">Revenu (+)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Date</label>
+                        <input type="date" id="op-date" required class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Catégorie</label>
+                        <select id="op-category" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 bg-white">
+                            <option value="Alimentation">Alimentation / Courses</option>
+                            <option value="Logement">Logement</option>
+                            <option value="Transport">Transport / Carburant</option>
+                            <option value="Abonnements">Abonnements</option>
+                            <option value="Loisirs">Loisirs / Sorties</option>
+                            <option value="Santé">Santé</option>
+                            <option value="Salaire">Salaire / Revenu</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-2">
+                    <input type="checkbox" id="op-pointed" class="w-4 h-4 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500">
+                    <label for="op-pointed" class="text-xs font-medium text-slate-700 cursor-pointer">Marquer directement comme pointé (déjà sur la banque)</label>
+                </div>
+
+                <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
+                    <button type="button" onclick="closeModalOperation()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Annuler</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application JavaScript -->
+    <script>
+        const STORAGE_KEY_PREVISIONS = 'app_budget_previsions_json_v3';
+        const STORAGE_KEY_OPERATIONS = 'app_budget_operations_json_v3';
+
+        // Vos prévisions classées dans l'ordre chronologique exact fourni (du 24/11 au 15/12)
+        const defaultPrevisionsJSON = [
+            { id: '1', title: 'Virement (CATG)', amount: 2450.00, type: 'income', day: 24, order: 1, category: 'Salaire' },
+            { id: '2', title: 'Bouygues Télécom Bbox Fibre', amount: 42.99, type: 'expense', day: 25, order: 2, category: 'Abonnements' },
+            { id: '3', title: 'Bouygues Télécom Tel Stéph', amount: 46.99, type: 'expense', day: 25, order: 3, category: 'Abonnements' },
+            { id: '4', title: 'Bouygues Télécom Tel Flo', amount: 22.99, type: 'expense', day: 25, order: 4, category: 'Abonnements' },
+            { id: '5', title: 'Prêt Igesa (20/24)', amount: 131.33, type: 'expense', day: 25, order: 5, category: 'Logement' },
+            { id: '6', title: 'Location garage', amount: 132.00, type: 'expense', day: 25, order: 6, category: 'Logement' },
+            { id: '7', title: 'Flo', amount: 100.00, type: 'income', day: 1, order: 7, category: 'Autre' },
+            { id: '8', title: 'GMPA-Allianz', amount: 40.37, type: 'expense', day: 2, order: 8, category: 'Assurance' },
+            { id: '9', title: 'GMF Assurances', amount: 209.99, type: 'expense', day: 3, order: 9, category: 'Assurance' },
+            { id: '10', title: 'Placement PER - BPCE Vie', amount: 100.00, type: 'expense', day: 3, order: 10, category: 'Autre' },
+            { id: '11', title: 'Placement - BPCE Vie', amount: 104.04, type: 'expense', day: 3, order: 11, category: 'Autre' },
+            { id: '12', title: 'BPCE Vie - Assurance vie', amount: 9.39, type: 'expense', day: 3, order: 12, category: 'Assurance' },
+            { id: '13', title: 'Prévision courses', amount: 800.00, type: 'expense', day: 5, order: 13, category: 'Alimentation' },
+            { id: '14', title: 'Bitstack', amount: 80.00, type: 'expense', day: 5, order: 14, category: 'Autre' },
+            { id: '15', title: 'Netflix', amount: 14.99, type: 'expense', day: 5, order: 15, category: 'Abonnements' },
+            { id: '16', title: 'ENI', amount: 101.04, type: 'expense', day: 5, order: 16, category: 'Factures' },
+            { id: '17', title: 'UNEO', amount: 3.28, type: 'expense', day: 5, order: 17, category: 'Assurance' },
+            { id: '18', title: 'Crédit CE', amount: 150.00, type: 'expense', day: 6, order: 18, category: 'Autre' },
+            { id: '19', title: 'Ordures ménagères (11/12)', amount: 26.85, type: 'expense', day: 7, order: 19, category: 'Factures' },
+            { id: '20', title: 'Bouquet Liberté CE', amount: 21.30, type: 'expense', day: 10, order: 20, category: 'Abonnements' },
+            { id: '21', title: 'Assurance 206 Catherine', amount: 15.57, type: 'expense', day: 15, order: 21, category: 'Assurance' }
+        ];
+
+        let previsions = [];
+        let operations = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            initDateSelectors();
+            renderApp();
+        });
+
+        function loadData() {
+            const savedPrev = localStorage.getItem(STORAGE_KEY_PREVISIONS);
+            const savedOp = localStorage.getItem(STORAGE_KEY_OPERATIONS);
+
+            previsions = savedPrev ? JSON.parse(savedPrev) : defaultPrevisionsJSON;
+            operations = savedOp ? JSON.parse(savedOp) : [];
+
+            if (!savedPrev) saveData();
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY_PREVISIONS, JSON.stringify(previsions));
+            localStorage.setItem(STORAGE_KEY_OPERATIONS, JSON.stringify(operations));
+        }
+
+        function initDateSelectors() {
+            const today = new Date();
+            const monthSelect = document.getElementById('select-month');
+            const yearSelect = document.getElementById('select-year');
+
+            monthSelect.value = today.getMonth();
+
+            const currentYear = today.getFullYear();
+            yearSelect.innerHTML = '';
+            for (let y = currentYear - 2; y <= currentYear + 2; y++) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y;
+                opt.className = 'bg-slate-800';
+                if (y === currentYear) opt.selected = true;
+                yearSelect.appendChild(opt);
+            }
+        }
+
+        function renderApp() {
+            const selectedMonth = parseInt(document.getElementById('select-month').value);
+            const selectedYear = parseInt(document.getElementById('select-year').value);
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+
+            const currentOps = operations.filter(op => {
+                const opDate = new Date(op.date);
+                const matchMonth = opDate.getMonth() === selectedMonth && opDate.getFullYear() === selectedYear;
+                const matchSearch = op.title.toLowerCase().includes(searchQuery) || op.category.toLowerCase().includes(searchQuery);
+                return matchMonth && matchSearch;
+            }).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            renderPrevisionsList(selectedMonth, selectedYear);
+            renderOperationsList(currentOps);
+            calculateStats(selectedMonth, selectedYear, currentOps);
+
+            lucide.createIcons();
+        }
+
+        function renderPrevisionsList(selectedMonth, selectedYear) {
+            const list = document.getElementById('list-previsions');
+            list.innerHTML = '';
+
+            let totalVal = 0;
+
+            const executedPrevIds = operations
+                .filter(op => {
+                    const d = new Date(op.date);
+                    return d.getMonth() === selectedMonth && d.getFullYear() === selectedYear && op.previsionId;
+                })
+                .map(op => op.previsionId);
+
+            // Tri respectant l'ordre personnalisé de votre liste
+            const sortedPrevisions = [...previsions].sort((a, b) => (a.order || a.day) - (b.order || b.day));
+
+            sortedPrevisions.forEach(prev => {
+                const isExecuted = executedPrevIds.includes(prev.id);
+                const amountSigned = prev.type === 'expense' ? -prev.amount : prev.amount;
+                totalVal += amountSigned;
+
+                const item = document.createElement('div');
+                item.className = `p-3 flex items-center justify-between hover:bg-slate-50 transition-colors ${isExecuted ? 'opacity-50 bg-slate-50/60' : ''}`;
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center ${isExecuted ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'}">
+                            ${isExecuted ? '<i data-lucide="check" class="w-4 h-4"></i>' : 'J' + prev.day}
+                        </div>
+                        <div>
+                            <div class="font-medium text-sm text-slate-800 ${isExecuted ? 'line-through text-slate-400' : ''}">
+                                ${escapeHtml(prev.title)}
+                            </div>
+                            <div class="text-xs text-slate-400">${prev.category}</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-sm ${prev.type === 'expense' ? 'text-slate-700' : 'text-emerald-600'}">
+                            ${prev.type === 'expense' ? '-' : '+'}${formatCurrency(prev.amount)}
+                        </span>
+                        
+                        ${!isExecuted ? `
+                            <button onclick="injectPrevision('${prev.id}')" title="Convertir en opération ce mois-ci" class="p-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-md transition-colors">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                            </button>
+                        ` : `
+                            <span class="text-[10px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-medium">Réalisé</span>
+                        `}
+
+                        <button onclick="openModalPrevision('${prev.id}')" class="p-1 text-slate-300 hover:text-slate-600">
+                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                        </button>
+                        <button onclick="deletePrevision('${prev.id}')" class="p-1 text-slate-300 hover:text-rose-500">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+
+            document.getElementById('total-previsions').textContent = formatCurrency(totalVal);
+        }
+
+        function renderOperationsList(ops) {
+            const list = document.getElementById('list-operations');
+            list.innerHTML = '';
+
+            if (ops.length === 0) {
+                list.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="p-8 text-center text-slate-400">
+                            <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 stroke-1"></i>
+                            <p class="text-xs">Aucune opération trouvée pour cette période</p>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('count-operations').textContent = '0 opération';
+                return;
+            }
+
+            ops.forEach(op => {
+                const tr = document.createElement('tr');
+                tr.className = `hover:bg-slate-50/80 transition-colors ${op.pointed ? 'bg-slate-50/30' : ''}`;
+                
+                const dateFormatted = new Date(op.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+
+                tr.innerHTML = `
+                    <td class="p-3 text-center">
+                        <button onclick="togglePointed('${op.id}')" class="p-1 rounded-full hover:bg-slate-200/60 transition-colors">
+                            <i data-lucide="${op.pointed ? 'check-circle-2' : 'circle'}" class="w-5 h-5 ${op.pointed ? 'text-emerald-500 fill-emerald-50' : 'text-slate-300'}"></i>
+                        </button>
+                    </td>
+                    <td class="p-3 text-xs text-slate-500 whitespace-nowrap">${dateFormatted}</td>
+                    <td class="p-3 font-medium text-slate-800">
+                        ${escapeHtml(op.title)}
+                        ${op.previsionId ? '<span class="ml-1 text-[10px] bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded border border-indigo-100">Fixe</span>' : ''}
+                    </td>
+                    <td class="p-3 hidden sm:table-cell">
+                        <span class="inline-block px-2 py-0.5 text-[11px] font-medium rounded-full bg-slate-100 text-slate-600">
+                            ${escapeHtml(op.category)}
+                        </span>
+                    </td>
+                    <td class="p-3 text-right font-bold whitespace-nowrap ${op.type === 'expense' ? 'text-slate-800' : 'text-emerald-600'}">
+                        ${op.type === 'expense' ? '-' : '+'}${formatCurrency(op.amount)}
+                    </td>
+                    <td class="p-3 text-center whitespace-nowrap">
+                        <div class="flex justify-center gap-1">
+                            <button onclick="openModalOperation('${op.id}')" class="p-1 text-slate-400 hover:text-indigo-600"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                            <button onclick="deleteOperation('${op.id}')" class="p-1 text-slate-400 hover:text-rose-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </td>
+                `;
+                list.appendChild(tr);
+            });
+
+            document.getElementById('count-operations').textContent = `${ops.length} opération(s)`;
+        }
+
+        function calculateStats(selectedMonth, selectedYear, currentOps) {
+            let soldePointe = operations
+                .filter(op => op.pointed)
+                .reduce((acc, op) => acc + (op.type === 'expense' ? -op.amount : op.amount), 0);
+
+            let revenusMois = 0;
+            let depensesMois = 0;
+            let totalMoisNonPointe = 0;
+
+            currentOps.forEach(op => {
+                const val = op.type === 'expense' ? -op.amount : op.amount;
+                if (op.type === 'income') revenusMois += op.amount;
+                if (op.type === 'expense') depensesMois += op.amount;
+
+                if (!op.pointed) {
+                    totalMoisNonPointe += val;
+                }
+            });
+
+            const executedPrevIds = currentOps.filter(op => op.previsionId).map(op => op.previsionId);
+            const remainingPrevisions = previsions.filter(prev => !executedPrevIds.includes(prev.id));
+
+            let totalPrevisionsRestantes = remainingPrevisions.reduce((acc, prev) => {
+                return acc + (prev.type === 'expense' ? -prev.amount : prev.amount);
+            }, 0);
+
+            let soldeEstime = soldePointe + totalMoisNonPointe + totalPrevisionsRestantes;
+
+            document.getElementById('stat-solde-pointer').textContent = formatCurrency(soldePointe);
+            document.getElementById('stat-previs-restantes').textContent = formatCurrency(totalPrevisionsRestantes);
+            document.getElementById('stat-previs-count').textContent = remainingPrevisions.length;
+            document.getElementById('stat-solde-estime').textContent = formatCurrency(soldeEstime);
+
+            document.getElementById('stat-revenus').textContent = '+' + formatCurrency(revenusMois);
+            document.getElementById('stat-depenses').textContent = '-' + formatCurrency(depensesMois);
+
+            const elEstime = document.getElementById('stat-solde-estime');
+            if (soldeEstime < 0) {
+                elEstime.className = 'text-2xl font-bold text-rose-600';
+            } else {
+                elEstime.className = 'text-2xl font-bold text-indigo-600';
+            }
+
+            const totalFlux = revenusMois + depensesMois;
+            const revPct = totalFlux > 0 ? (revenusMois / totalFlux) * 100 : 50;
+            const depPct = totalFlux > 0 ? (depensesMois / totalFlux) * 100 : 50;
+
+            document.getElementById('bar-revenus').style.width = revPct + '%';
+            document.getElementById('bar-depenses').style.width = depPct + '%';
+
+            document.getElementById('total-pointe').textContent = formatCurrency(
+                currentOps.filter(o => o.pointed).reduce((acc, o) => acc + (o.type === 'expense' ? -o.amount : o.amount), 0)
+            );
+        }
+
+        function injectPrevision(prevId) {
+            const prev = previsions.find(p => p.id === prevId);
+            if (!prev) return;
+
+            const selectedMonth = parseInt(document.getElementById('select-month').value);
+            const selectedYear = parseInt(document.getElementById('select-year').value);
+
+            const day = Math.min(prev.day, 28);
+            const monthStr = String(selectedMonth + 1).padStart(2, '0');
+            const dayStr = String(day).padStart(2, '0');
+            const targetDate = `${selectedYear}-${monthStr}-${dayStr}`;
+
+            const newOp = {
+                id: Date.now().toString(),
+                title: prev.title,
+                amount: prev.amount,
+                type: prev.type,
+                date: targetDate,
+                category: prev.category,
+                pointed: true,
+                previsionId: prev.id
+            };
+
+            operations.push(newOp);
+            saveData();
+            renderApp();
+        }
+
+        function togglePointed(opId) {
+            const op = operations.find(o => o.id === opId);
+            if (op) {
+                op.pointed = !op.pointed;
+                saveData();
+                renderApp();
+            }
+        }
+
+        function openModalPrevision(id = null) {
+            const modal = document.getElementById('modal-prevision');
+            const form = document.getElementById('form-prevision');
+
+            if (id) {
+                const prev = previsions.find(p => p.id === id);
+                document.getElementById('modal-prev-title').textContent = 'Modifier l\'entrée ou le prélèvement';
+                document.getElementById('prev-id').value = prev.id;
+                document.getElementById('prev-title').value = prev.title;
+                document.getElementById('prev-amount').value = prev.amount;
+                document.getElementById('prev-type').value = prev.type;
+                document.getElementById('prev-day').value = prev.day;
+                document.getElementById('prev-category').value = prev.category;
+            } else {
+                document.getElementById('modal-prev-title').textContent = 'Ajouter une entrée ou un prélèvement';
+                form.reset();
+                document.getElementById('prev-id').value = '';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModalPrevision() {
+            document.getElementById('modal-prevision').classList.add('hidden');
+        }
+
+        function savePrevision(e) {
+            e.preventDefault();
+            const id = document.getElementById('prev-id').value;
+            const title = document.getElementById('prev-title').value.trim();
+            const amount = parseFloat(document.getElementById('prev-amount').value);
+            const type = document.getElementById('prev-type').value;
+            const day = parseInt(document.getElementById('prev-day').value);
+            const category = document.getElementById('prev-category').value;
+
+            if (id) {
+                const index = previsions.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    previsions[index] = { ...previsions[index], title, amount, type, day, category };
+                }
+            } else {
+                previsions.push({
+                    id: Date.now().toString(),
+                    title, amount, type, day, category, order: previsions.length + 1
+                });
+            }
+
+            saveData();
+            closeModalPrevision();
+            renderApp();
+        }
+
+        function deletePrevision(id) {
+            if (confirm('Voulez-vous supprimer cet élément fixe ?')) {
+                previsions = previsions.filter(p => p.id !== id);
+                saveData();
+                renderApp();
+            }
+        }
+
+        function openModalOperation(id = null) {
+            const modal = document.getElementById('modal-operation');
+            const form = document.getElementById('form-operation');
+
+            if (id) {
+                const op = operations.find(o => o.id === id);
+                document.getElementById('modal-op-title').textContent = 'Modifier l\'opération';
+                document.getElementById('op-id').value = op.id;
+                document.getElementById('op-title').value = op.title;
+                document.getElementById('op-amount').value = op.amount;
+                document.getElementById('op-type').value = op.type;
+                document.getElementById('op-date').value = op.date;
+                document.getElementById('op-category').value = op.category;
+                document.getElementById('op-pointed').checked = op.pointed;
+            } else {
+                document.getElementById('modal-op-title').textContent = 'Nouvelle opération';
+                form.reset();
+                document.getElementById('op-id').value = '';
+                
+                const selectedMonth = parseInt(document.getElementById('select-month').value);
+                const selectedYear = parseInt(document.getElementById('select-year').value);
+                const today = new Date();
+
+                if (today.getMonth() === selectedMonth && today.getFullYear() === selectedYear) {
+                    document.getElementById('op-date').value = today.toISOString().split('T')[0];
+                } else {
+                    const monthStr = String(selectedMonth + 1).padStart(2, '0');
+                    document.getElementById('op-date').value = `${selectedYear}-${monthStr}-01`;
+                }
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModalOperation() {
+            document.getElementById('modal-operation').classList.add('hidden');
+        }
+
+        function saveOperation(e) {
+            e.preventDefault();
+            const id = document.getElementById('op-id').value;
+            const title = document.getElementById('op-title').value.trim();
+            const amount = parseFloat(document.getElementById('op-amount').value);
+            const type = document.getElementById('op-type').value;
+            const date = document.getElementById('op-date').value;
+            const category = document.getElementById('op-category').value;
+            const pointed = document.getElementById('op-pointed').checked;
+
+            if (id) {
+                const index = operations.findIndex(o => o.id === id);
+                if (index !== -1) {
+                    operations[index] = { ...operations[index], title, amount, type, date, category, pointed };
+                }
+            } else {
+                operations.push({
+                    id: Date.now().toString(),
+                    title, amount, type, date, category, pointed
+                });
+            }
+
+            saveData();
+            closeModalOperation();
+            renderApp();
+        }
+
+        function deleteOperation(id) {
+            if (confirm('Supprimer cette opération ?')) {
+                operations = operations.filter(o => o.id !== id);
+                saveData();
+                renderApp();
+            }
+        }
+
+        function exportJSONConfig() {
+            const data = {
+                previsions,
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `budget-config_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importJSONConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    const newPrevs = Array.isArray(data) ? data : data.previsions;
+                    
+                    if (newPrevs && Array.isArray(newPrevs)) {
+                        previsions = newPrevs;
+                        saveData();
+                        renderApp();
+                        alert('Entrées et prélèvements fixes importés avec succès !');
+                    } else {
+                        alert('Format de fichier JSON invalide.');
+                    }
+                } catch (err) {
+                    alert('Erreur lors de la lecture du fichier JSON.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetData() {
+            if (confirm('Attention : cela va réinitialiser les entrées et prélèvements fixes avec la liste d\'origine. Continuer ?')) {
+                localStorage.removeItem(STORAGE_KEY_PREVISIONS);
+                loadData();
+                renderApp();
+            }
+        }
+
+        function formatCurrency(val) {
+            return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(val);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[m];
+            });
+        }
+    </script>
+</body>
+</html>
