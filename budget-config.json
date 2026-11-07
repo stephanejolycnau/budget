@@ -181,7 +181,147 @@
       "date": "2026-11-07",
       "category": "Autre",
       "pointed": true
+    },
+    {
+      "id": "1794040265094",
+      "title": "CATG",
+      "amount": 0,
+      "type": "income",
+      "date": "2026-11-01",
+      "category": "Salaire / Revenu",
+      "pointed": true,
+      "previsionId": "1794039082061"
+    },
+    {
+      "id": "1794040313133",
+      "title": "Bouygues Telecom Bbox Fibre",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-02",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1794039136204"
+    },
+    {
+      "id": "1794040323647",
+      "title": "Bouygues Telecom Tél Stéph",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-02",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1794039163789"
+    },
+    {
+      "id": "1794040326512",
+      "title": "Bouygues Telecom Tél Flo",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-02",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1794039187380"
+    },
+    {
+      "id": "1794040328721",
+      "title": "Prêt IGESA",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-02",
+      "category": "Crédit",
+      "pointed": true,
+      "previsionId": "1794039212071"
+    },
+    {
+      "id": "1794040331180",
+      "title": "Location garage",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-01",
+      "category": "Logement",
+      "pointed": true,
+      "previsionId": "1794039234837"
+    },
+    {
+      "id": "1794040333186",
+      "title": "AGPM - Allianz",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-02",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1794039271812"
+    },
+    {
+      "id": "1794040334609",
+      "title": "GMPA - Allianz",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-02",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1794039292857"
+    },
+    {
+      "id": "1794040335848",
+      "title": "GMF Assurances",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-03",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1794039316683"
+    },
+    {
+      "id": "1794040339368",
+      "title": "Netflix",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-05",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1794039416411"
+    },
+    {
+      "id": "1794040364337",
+      "title": "ENI",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-05",
+      "category": "Factures / Énergie",
+      "pointed": true,
+      "previsionId": "1794039509705"
+    },
+    {
+      "id": "1794040367543",
+      "title": "Placement PER - BPCE Vie",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-03",
+      "category": "Placement",
+      "pointed": true,
+      "previsionId": "1794039342924"
+    },
+    {
+      "id": "1794040370391",
+      "title": "Placement BPCE Vie",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-03",
+      "category": "Placement",
+      "pointed": true,
+      "previsionId": "1794039364510"
+    },
+    {
+      "id": "1794040375367",
+      "title": "UNEO",
+      "amount": 0,
+      "type": "expense",
+      "date": "2026-11-05",
+      "category": "Santé",
+      "pointed": true,
+      "previsionId": "1794039528801"
     }
   ],
-  "lastUpdate": "2026-11-07T08:28:16.150Z"
+  "lastUpdate": "2026-11-07T08:35:47.374Z"
 }
