@@ -174,7 +174,7 @@
   ],
   "operations": [
     {
-      "id": "1794039995486",
+      "id": "1794040090800",
       "title": "Solde au 07/11/2026",
       "amount": 428.12,
       "type": "income",
@@ -183,5 +183,5 @@
       "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-07T08:26:52.110Z"
+  "lastUpdate": "2026-11-07T08:28:16.150Z"
 }
