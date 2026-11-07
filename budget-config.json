@@ -321,7 +321,70 @@
       "category": "Santé",
       "pointed": true,
       "previsionId": "1794039528801"
+    },
+    {
+      "id": "1794068617468",
+      "title": "La scala",
+      "amount": 34,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Loisirs / Sorties",
+      "pointed": false
+    },
+    {
+      "id": "1794068647103",
+      "title": "Bitstack",
+      "amount": 1,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Placement",
+      "pointed": false
+    },
+    {
+      "id": "1794068669976",
+      "title": "Bitstack",
+      "amount": 23.34,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Placement",
+      "pointed": false
+    },
+    {
+      "id": "1794068693473",
+      "title": "Fresh",
+      "amount": 46.93,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": false
+    },
+    {
+      "id": "1794068718344",
+      "title": "Super U",
+      "amount": 239.35,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": false
+    },
+    {
+      "id": "1794068822358",
+      "title": "Essence Celerio",
+      "amount": 63.72,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Transport / Carburant",
+      "pointed": false
+    },
+    {
+      "id": "1794068867143",
+      "title": "Midas Pneus avant Swift",
+      "amount": 244.48,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Transport / Carburant",
+      "pointed": false
     }
   ],
-  "lastUpdate": "2026-11-07T08:35:47.374Z"
+  "lastUpdate": "2026-11-07T16:28:07.332Z"
 }
