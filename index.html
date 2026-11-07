@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de Budget - Sync GitHub</title>
+    <title>Gestion de Budget & Livret A - Sync GitHub</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
     <style>
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -19,19 +19,34 @@
 
     <!-- Header / Navbar -->
     <header class="bg-slate-900 text-white shadow-md sticky top-0 z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 p-2 rounded-xl">
-                    <i data-lucide="github" class="w-6 h-6 text-white"></i>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
+            
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-indigo-600 p-2 rounded-xl">
+                        <i data-lucide="github" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold leading-tight">Mon Budget Personnel</h1>
+                        <p class="text-xs text-slate-400" id="current-tab-label">Sync Automatique GitHub</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold leading-tight">Mon Budget Personnel</h1>
-                    <p class="text-xs text-slate-400">Sync Automatique GitHub</p>
-                </div>
+
+                <!-- Navigation Onglets -->
+                <nav class="flex items-center gap-1 bg-slate-800 p-1 rounded-xl border border-slate-700">
+                    <button id="tab-btn-courant" onclick="switchTab('courant')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 bg-indigo-600 text-white shadow-sm">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                        <span>Compte Courant</span>
+                    </button>
+                    <button id="tab-btn-livret" onclick="switchTab('livret')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white">
+                        <i data-lucide="piggy-bank" class="w-4 h-4"></i>
+                        <span>Livret A</span>
+                    </button>
+                </nav>
             </div>
 
-            <!-- Filtre Mois/Année & Sync GitHub -->
-            <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
+            <!-- Filtre Mois/Année & Actions GitHub -->
+            <div class="flex items-center gap-3 flex-wrap">
                 <div class="flex items-center gap-1 bg-slate-800 p-1.5 rounded-lg border border-slate-700">
                     <i data-lucide="calendar" class="w-4 h-4 text-slate-400 ml-1"></i>
                     <select id="select-month" onchange="renderApp()" class="bg-transparent text-sm font-medium text-white focus:outline-none cursor-pointer pr-2">
@@ -52,15 +67,17 @@
                     </select>
                 </div>
 
-                <div class="flex gap-1 items-center bg-slate-800/80 p-1 rounded-lg border border-slate-700">
-                    <button onclick="syncToGitHub()" title="Sauvegarder directement sur GitHub" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors flex items-center gap-1.5 text-xs font-semibold shadow-sm">
+                <div class="flex items-center gap-2">
+                    <button onclick="syncToGitHub()" title="Sauvegarder directement sur GitHub" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors flex items-center gap-1.5 text-xs font-semibold shadow-sm">
                         <i data-lucide="cloud-upload" class="w-4 h-4"></i>
                         <span>Enregistrer sur Git</span>
                     </button>
-                    <button onclick="loadFromGitHub()" title="Recharger depuis GitHub" class="p-2 text-slate-400 hover:text-indigo-400 rounded-md transition-colors border-l border-slate-700">
+                    
+                    <button onclick="loadFromGitHub()" title="Recharger depuis GitHub" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors border border-slate-700 flex items-center justify-center">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                     </button>
-                    <button onclick="configureToken()" title="Configurer le Token" class="p-2 text-slate-400 hover:text-amber-400 rounded-md transition-colors">
+                    
+                    <button onclick="configureToken()" title="Configurer le Token" class="p-2 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg transition-colors border border-slate-700 flex items-center justify-center">
                         <i data-lucide="key" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -70,119 +87,180 @@
 
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-        <!-- Cards Synthèse (3 cartes) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            
-            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Réel (Pointé)</span>
-                    <div class="p-2 rounded-lg bg-blue-50 text-blue-600">
-                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        <!-- VUE COMPTE COURANT -->
+        <div id="view-courant" class="space-y-6">
+            <!-- Cards Synthèse (3 cartes) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Réel (Pointé)</span>
+                        <div class="p-2 rounded-lg bg-blue-50 text-blue-600">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                        </div>
                     </div>
+                    <div id="stat-solde-pointer" class="text-2xl font-bold text-slate-900">0,00 €</div>
+                    <p class="text-xs text-slate-400 mt-1">Sur le compte bancaire</p>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
                 </div>
-                <div id="stat-solde-pointer" class="text-2xl font-bold text-slate-900">0,00 €</div>
-                <p class="text-xs text-slate-400 mt-1">Sur le compte bancaire</p>
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
+
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Prévisions Restantes</span>
+                        <div class="p-2 rounded-lg bg-amber-50 text-amber-600">
+                            <i data-lucide="clock" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="stat-previs-restantes" class="text-2xl font-bold text-amber-600">0,00 €</div>
+                    <p class="text-xs text-slate-400 mt-1"><span id="stat-previs-count">0</span> prévision(s) en attente</p>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Estimé (Fin de mois)</span>
+                        <div class="p-2 rounded-lg bg-indigo-50 text-indigo-600">
+                            <i data-lucide="trending-up" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="stat-solde-estime" class="text-2xl font-bold text-indigo-600">0,00 €</div>
+                    <p class="text-xs text-slate-400 mt-1">Réel + Prévisions + Non pointées</p>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
+                </div>
             </div>
 
-            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Prévisions Restantes</span>
-                    <div class="p-2 rounded-lg bg-amber-50 text-amber-600">
-                        <i data-lucide="clock" class="w-5 h-5"></i>
+            <!-- Section Principale Courant -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Entrées et prélèvements fixes -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-full">
+                    <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 rounded-t-xl">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="repeat" class="w-5 h-5 text-indigo-600"></i>
+                            <h2 class="font-bold text-slate-800">Entrées et prélèvements fixes</h2>
+                        </div>
+                        <button onclick="openModalPrevision()" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>Ajouter</span>
+                        </button>
+                    </div>
+                    <div class="divide-y divide-slate-100 flex-1 overflow-y-auto max-h-[500px]" id="list-previsions"></div>
+                    <div class="p-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-between items-center text-xs font-semibold text-slate-500">
+                        <span>Total prévisions/mois :</span>
+                        <span id="total-previsions" class="text-slate-800 font-bold">0,00 €</span>
                     </div>
                 </div>
-                <div id="stat-previs-restantes" class="text-2xl font-bold text-amber-600">0,00 €</div>
-                <p class="text-xs text-slate-400 mt-1"><span id="stat-previs-count">0</span> prévision(s) en attente</p>
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
-            </div>
 
-            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Estimé (Fin de mois)</span>
-                    <div class="p-2 rounded-lg bg-indigo-50 text-indigo-600">
-                        <i data-lucide="trending-up" class="w-5 h-5"></i>
+                <!-- Opérations Réelles -->
+                <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-full">
+                    <div class="p-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3 bg-slate-50/50 rounded-t-xl">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="receipt" class="w-5 h-5 text-indigo-600"></i>
+                            <h2 class="font-bold text-slate-800">Opérations du mois</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="relative">
+                                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
+                                <input type="text" id="search-input" oninput="renderApp()" placeholder="Rechercher..." class="pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 w-32 sm:w-48">
+                            </div>
+                            <button onclick="openModalOperation()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <span>Nouvelle opération</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto flex-1">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-xs text-slate-400 uppercase font-semibold border-b border-slate-100">
+                                <tr>
+                                    <th class="p-3 text-center w-12">Pointé</th>
+                                    <th class="p-3">Date</th>
+                                    <th class="p-3">Libellé</th>
+                                    <th class="p-3 hidden sm:table-cell">Catégorie</th>
+                                    <th class="p-3 text-right">Montant</th>
+                                    <th class="p-3 text-center w-20">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list-operations" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                    <div class="p-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-between items-center text-xs text-slate-500">
+                        <span id="count-operations">0 opération(s)</span>
+                        <div class="flex gap-4 font-semibold">
+                            <span>Pointé : <strong id="total-pointe" class="text-blue-600">0,00 €</strong></span>
+                        </div>
                     </div>
                 </div>
-                <div id="stat-solde-estime" class="text-2xl font-bold text-indigo-600">0,00 €</div>
-                <p class="text-xs text-slate-400 mt-1">Réel + Prévisions + Non pointées</p>
-                <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
             </div>
-
         </div>
 
-        <!-- Section Principale -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- VUE LIVRET A -->
+        <div id="view-livret" class="space-y-6 hidden">
+            <!-- Cards Synthèse Livret A -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Solde Actuel Livret A</span>
+                        <div class="p-2 rounded-lg bg-emerald-50 text-emerald-600">
+                            <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="stat-livret-solde" class="text-2xl font-bold text-emerald-600">0,00 €</div>
+                    <p class="text-xs text-slate-400 mt-1">Épargne totale disponible</p>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+                </div>
 
-            <!-- Entrées et prélèvements fixes -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-full">
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Versements</span>
+                        <div class="p-2 rounded-lg bg-indigo-50 text-indigo-600">
+                            <i data-lucide="arrow-down-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="stat-livret-versements" class="text-2xl font-bold text-slate-900">0,00 €</div>
+                    <p class="text-xs text-slate-400 mt-1">Total des ajouts d'épargne</p>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Retraits</span>
+                        <div class="p-2 rounded-lg bg-amber-50 text-amber-600">
+                            <i data-lucide="arrow-up-left" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div id="stat-livret-retraits" class="text-2xl font-bold text-slate-900">0,00 €</div>
+                    <p class="text-xs text-slate-400 mt-1">Total des retraits de l'épargne</p>
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
+                </div>
+            </div>
+
+            <!-- Liste des mouvements du Livret A -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col">
                 <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 rounded-t-xl">
                     <div class="flex items-center gap-2">
-                        <i data-lucide="repeat" class="w-5 h-5 text-indigo-600"></i>
-                        <h2 class="font-bold text-slate-800">Entrées et prélèvements fixes</h2>
+                        <i data-lucide="arrow-left-right" class="w-5 h-5 text-emerald-600"></i>
+                        <h2 class="font-bold text-slate-800">Mouvements du Livret A</h2>
                     </div>
-                    <button onclick="openModalPrevision()" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors">
+                    <button onclick="openModalLivretOp()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm">
                         <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Ajouter</span>
+                        <span>Ajouter un mouvement</span>
                     </button>
                 </div>
 
-                <div class="divide-y divide-slate-100 flex-1 overflow-y-auto max-h-[500px]" id="list-previsions">
-                </div>
-                
-                <div class="p-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-between items-center text-xs font-semibold text-slate-500">
-                    <span>Total prévisions/mois :</span>
-                    <span id="total-previsions" class="text-slate-800 font-bold">0,00 €</span>
-                </div>
-            </div>
-
-            <!-- Opérations Réelles -->
-            <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col h-full">
-                <div class="p-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3 bg-slate-50/50 rounded-t-xl">
-                    <div class="flex items-center gap-2">
-                        <i data-lucide="receipt" class="w-5 h-5 text-indigo-600"></i>
-                        <h2 class="font-bold text-slate-800">Opérations du mois</h2>
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5"></i>
-                            <input type="text" id="search-input" oninput="renderApp()" placeholder="Rechercher..." class="pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 w-32 sm:w-48">
-                        </div>
-
-                        <button onclick="openModalOperation()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm">
-                            <i data-lucide="plus" class="w-4 h-4"></i>
-                            <span>Nouvelle opération</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="overflow-x-auto flex-1">
+                <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm text-slate-600">
                         <thead class="bg-slate-50 text-xs text-slate-400 uppercase font-semibold border-b border-slate-100">
                             <tr>
-                                <th class="p-3 text-center w-12">Pointé</th>
                                 <th class="p-3">Date</th>
                                 <th class="p-3">Libellé</th>
-                                <th class="p-3 hidden sm:table-cell">Catégorie</th>
+                                <th class="p-3">Type</th>
                                 <th class="p-3 text-right">Montant</th>
                                 <th class="p-3 text-center w-20">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="list-operations" class="divide-y divide-slate-100">
-                        </tbody>
+                        <tbody id="list-livret-ops" class="divide-y divide-slate-100"></tbody>
                     </table>
                 </div>
-
-                <div class="p-3 border-t border-slate-100 bg-slate-50 rounded-b-xl flex justify-between items-center text-xs text-slate-500">
-                    <span id="count-operations">0 opération(s)</span>
-                    <div class="flex gap-4 font-semibold">
-                        <span>Pointé : <strong id="total-pointe" class="text-blue-600">0,00 €</strong></span>
-                    </div>
-                </div>
-
             </div>
-
         </div>
 
     </main>
@@ -244,7 +322,7 @@
         </div>
     </div>
 
-    <!-- Modal Operation -->
+    <!-- Modal Operation Courant -->
     <div id="modal-operation" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">
             <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
@@ -305,10 +383,54 @@
         </div>
     </div>
 
+    <!-- Modal Livret A Operation -->
+    <div id="modal-livret-op" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">
+            <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
+                <h3 id="modal-livret-title" class="font-bold text-base">Mouvement Livret A</h3>
+                <button onclick="closeModalLivretOp()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="form-livret-op" onsubmit="saveLivretOp(event)" class="p-5 space-y-4">
+                <input type="hidden" id="livret-op-id">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Libellé</label>
+                    <input type="text" id="livret-op-title" placeholder="ex: Versement mensuel, Intérêts, Retrait..." required class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Montant (€)</label>
+                        <input type="number" step="0.01" id="livret-op-amount" required class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Type</label>
+                        <select id="livret-op-type" class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg bg-white">
+                            <option value="deposit">Versement (+)</option>
+                            <option value="withdrawal">Retrait (-)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Date</label>
+                    <input type="date" id="livret-op-date" required class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg">
+                </div>
+                <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
+                    <button type="button" onclick="closeModalLivretOp()" class="px-4 py-2 text-xs font-semibold text-slate-600">Annuler</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-semibold bg-emerald-600 text-white rounded-lg shadow">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Application JavaScript -->
     <script>
+        let currentTab = 'courant'; // 'courant' ou 'livret'
+
+        // Données Compte Courant
         let previsions = [];
         let operations = [];
+
+        // Données Livret A
+        let livretOps = [];
 
         let ghConfig = {
             owner: localStorage.getItem('gh_owner') || 'ton-pseudo',
@@ -319,7 +441,39 @@
         document.addEventListener('DOMContentLoaded', () => {
             initDateSelectors();
             loadFromGitHub();
+            refreshIcons();
         });
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const btnCourant = document.getElementById('tab-btn-courant');
+            const btnLivret = document.getElementById('tab-btn-livret');
+            const viewCourant = document.getElementById('view-courant');
+            const viewLivret = document.getElementById('view-livret');
+            const currentTabLabel = document.getElementById('current-tab-label');
+
+            if (tab === 'courant') {
+                btnCourant.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 bg-indigo-600 text-white shadow-sm";
+                btnLivret.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white";
+                viewCourant.classList.remove('hidden');
+                viewLivret.classList.add('hidden');
+                currentTabLabel.textContent = "Sync: budget-config.json";
+            } else {
+                btnLivret.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 bg-emerald-600 text-white shadow-sm";
+                btnCourant.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-400 hover:text-white";
+                viewLivret.classList.remove('hidden');
+                viewCourant.classList.add('hidden');
+                currentTabLabel.textContent = "Sync: livret-a-config.json";
+            }
+
+            loadFromGitHub();
+        }
+
+        function refreshIcons() {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
 
         function configureToken() {
             const token = prompt("Colle ton Personal Access Token GitHub (commençant par github_pat_) :", ghConfig.token);
@@ -327,12 +481,12 @@
                 ghConfig.token = token.trim();
                 localStorage.setItem('gh_token', ghConfig.token);
             }
-            const owner = prompt("Entre ton pseudo GitHub (propriétaire du dépôt) :", ghConfig.owner);
+            const owner = prompt("Entre ton pseudo GitHub :", ghConfig.owner);
             if (owner !== null) {
                 ghConfig.owner = owner.trim();
                 localStorage.setItem('gh_owner', ghConfig.owner);
             }
-            const repo = prompt("Entre le nom de ton dépôt GitHub (ex: mon-budget) :", ghConfig.repo);
+            const repo = prompt("Entre le nom de ton dépôt GitHub :", ghConfig.repo);
             if (repo !== null) {
                 ghConfig.repo = repo.trim();
                 localStorage.setItem('gh_repo', ghConfig.repo);
@@ -341,18 +495,25 @@
         }
 
         function loadFromGitHub() {
-            fetch('budget-config.json?v=' + Date.now())
+            const jsonFile = currentTab === 'courant' ? 'budget-config.json' : 'livret-a-config.json';
+            
+            fetch(jsonFile + '?v=' + Date.now())
                 .then(response => {
                     if (!response.ok) throw new Error('Erreur de chargement du JSON');
                     return response.json();
                 })
                 .then(data => {
-                    previsions = Array.isArray(data) ? data : (data.previsions || []);
-                    operations = data.operations || [];
+                    if (currentTab === 'courant') {
+                        previsions = Array.isArray(data) ? data : (data.previsions || []);
+                        operations = data.operations || [];
+                    } else {
+                        livretOps = Array.isArray(data) ? data : (data.operations || []);
+                    }
                     renderApp();
                 })
                 .catch(err => {
                     console.error('Erreur :', err);
+                    renderApp();
                 });
         }
 
@@ -362,14 +523,20 @@
                 if (!ghConfig.token) return;
             }
 
-            const dataToSave = {
+            const isCourant = currentTab === 'courant';
+            const fileName = isCourant ? 'budget-config.json' : 'livret-a-config.json';
+            
+            const dataToSave = isCourant ? {
                 previsions,
                 operations,
+                lastUpdate: new Date().toISOString()
+            } : {
+                operations: livretOps,
                 lastUpdate: new Date().toISOString()
             };
 
             const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(dataToSave, null, 2))));
-            const url = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/budget-config.json`;
+            const url = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${fileName}`;
 
             try {
                 const getRes = await fetch(url, {
@@ -389,14 +556,14 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        message: "Mise à jour automatique du budget depuis l'application web",
+                        message: `Mise à jour du ${isCourant ? 'budget courant' : 'Livret A'}`,
                         content: contentEncoded,
                         sha: sha
                     })
                 });
 
                 if (putRes.ok) {
-                    alert("✔ Synchronisation réussie sur GitHub ! Les autres appareils ont maintenant accès à ces données.");
+                    alert(`✔ Synchronisation réussie pour ${fileName} sur GitHub !`);
                 } else {
                     const errJson = await putRes.json();
                     alert("Erreur lors de la sync : " + (errJson.message || putRes.statusText));
@@ -425,6 +592,15 @@
         }
 
         function renderApp() {
+            if (currentTab === 'courant') {
+                renderCourant();
+            } else {
+                renderLivret();
+            }
+            refreshIcons();
+        }
+
+        function renderCourant() {
             const selectedMonth = parseInt(document.getElementById('select-month').value);
             const selectedYear = parseInt(document.getElementById('select-year').value);
             const searchQuery = document.getElementById('search-input').value.toLowerCase();
@@ -439,8 +615,6 @@
             renderPrevisionsList(selectedMonth, selectedYear);
             renderOperationsList(currentOps);
             calculateStats(selectedMonth, selectedYear, currentOps);
-
-            lucide.createIcons();
         }
 
         function renderPrevisionsList(selectedMonth, selectedYear) {
@@ -564,24 +738,26 @@
                 .reduce((acc, op) => acc + (op.type === 'expense' ? -op.amount : op.amount), 0);
 
             let totalMoisNonPointe = 0;
-
             currentOps.forEach(op => {
-                const val = op.type === 'expense' ? -op.amount : op.amount;
-                if (!op.pointed) totalMoisNonPointe += val;
+                if (!op.pointed) {
+                    const val = op.type === 'expense' ? -op.amount : op.amount;
+                    totalMoisNonPointe += val;
+                }
             });
 
             const executedPrevIds = currentOps.filter(op => op.previsionId).map(op => op.previsionId);
             const remainingPrevisions = previsions.filter(prev => !executedPrevIds.includes(prev.id));
-
-            let totalPrevisionsRestantes = remainingPrevisions.reduce((acc, prev) => {
+            
+            let totalPrevisRestantes = remainingPrevisions.reduce((acc, prev) => {
                 return acc + (prev.type === 'expense' ? -prev.amount : prev.amount);
             }, 0);
 
-            let soldeEstime = soldePointe + totalMoisNonPointe + totalPrevisionsRestantes;
+            let totalPrevisCount = remainingPrevisions.length;
+            let soldeEstime = soldePointe + totalMoisNonPointe + totalPrevisRestantes;
 
             document.getElementById('stat-solde-pointer').textContent = formatCurrency(soldePointe);
-            document.getElementById('stat-previs-restantes').textContent = formatCurrency(totalPrevisionsRestantes);
-            document.getElementById('stat-previs-count').textContent = remainingPrevisions.length;
+            document.getElementById('stat-previs-restantes').textContent = formatCurrency(totalPrevisRestantes);
+            document.getElementById('stat-previs-count').textContent = totalPrevisCount;
             document.getElementById('stat-solde-estime').textContent = formatCurrency(soldeEstime);
 
             const elEstime = document.getElementById('stat-solde-estime');
@@ -592,6 +768,120 @@
             );
         }
 
+        /* --- FONCTIONS LIVRET A --- */
+        function renderLivret() {
+            const list = document.getElementById('list-livret-ops');
+            list.innerHTML = '';
+
+            let totalVersements = 0;
+            let totalRetraits = 0;
+
+            const sortedOps = [...livretOps].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sortedOps.length === 0) {
+                list.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="p-8 text-center text-slate-400">
+                            <i data-lucide="piggy-bank" class="w-8 h-8 mx-auto mb-2 stroke-1"></i>
+                            <p class="text-xs">Aucun mouvement enregistré sur votre Livret A</p>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                sortedOps.forEach(op => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50/80 transition-colors";
+                    const dateFormatted = new Date(op.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    const isDeposit = op.type === 'deposit';
+
+                    if (isDeposit) totalVersements += op.amount;
+                    else totalRetraits += op.amount;
+
+                    tr.innerHTML = `
+                        <td class="p-3 text-xs text-slate-500 whitespace-nowrap">${dateFormatted}</td>
+                        <td class="p-3 font-medium text-slate-800">${escapeHtml(op.title)}</td>
+                        <td class="p-3">
+                            <span class="inline-block px-2 py-0.5 text-[11px] font-medium rounded-full ${isDeposit ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+                                ${isDeposit ? 'Versement' : 'Retrait'}
+                            </span>
+                        </td>
+                        <td class="p-3 text-right font-bold whitespace-nowrap ${isDeposit ? 'text-emerald-600' : 'text-amber-600'}">
+                            ${isDeposit ? '+' : '-'}${formatCurrency(op.amount)}
+                        </td>
+                        <td class="p-3 text-center whitespace-nowrap">
+                            <div class="flex justify-center gap-1">
+                                <button onclick="openModalLivretOp('${op.id}')" class="p-1 text-slate-400 hover:text-indigo-600"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                                <button onclick="deleteLivretOp('${op.id}')" class="p-1 text-slate-400 hover:text-rose-600"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    list.appendChild(tr);
+                });
+            }
+
+            const soldeTotal = totalVersements - totalRetraits;
+            document.getElementById('stat-livret-solde').textContent = formatCurrency(soldeTotal);
+            document.getElementById('stat-livret-versements').textContent = formatCurrency(totalVersements);
+            document.getElementById('stat-livret-retraits').textContent = formatCurrency(totalRetraits);
+        }
+
+        function openModalLivretOp(id = null) {
+            const modal = document.getElementById('modal-livret-op');
+            const form = document.getElementById('form-livret-op');
+
+            if (id) {
+                const op = livretOps.find(o => o.id === id);
+                document.getElementById('modal-livret-title').textContent = 'Modifier le mouvement';
+                document.getElementById('livret-op-id').value = op.id;
+                document.getElementById('livret-op-title').value = op.title;
+                document.getElementById('livret-op-amount').value = op.amount;
+                document.getElementById('livret-op-type').value = op.type;
+                document.getElementById('livret-op-date').value = op.date;
+            } else {
+                document.getElementById('modal-livret-title').textContent = 'Nouveau mouvement Livret A';
+                form.reset();
+                document.getElementById('livret-op-id').value = '';
+                document.getElementById('livret-op-date').value = new Date().toISOString().split('T')[0];
+            }
+            modal.classList.remove('hidden');
+            refreshIcons();
+        }
+
+        function closeModalLivretOp() {
+            document.getElementById('modal-livret-op').classList.add('hidden');
+        }
+
+        function saveLivretOp(e) {
+            e.preventDefault();
+            const id = document.getElementById('livret-op-id').value;
+            const title = document.getElementById('livret-op-title').value.trim();
+            const amount = parseFloat(document.getElementById('livret-op-amount').value);
+            const type = document.getElementById('livret-op-type').value;
+            const date = document.getElementById('livret-op-date').value;
+
+            if (id) {
+                const index = livretOps.findIndex(o => o.id === id);
+                if (index !== -1) {
+                    livretOps[index] = { ...livretOps[index], title, amount, type, date };
+                }
+            } else {
+                livretOps.push({
+                    id: Date.now().toString(),
+                    title, amount, type, date
+                });
+            }
+            closeModalLivretOp();
+            renderApp();
+        }
+
+        function deleteLivretOp(id) {
+            if (confirm('Supprimer ce mouvement du Livret A ?')) {
+                livretOps = livretOps.filter(o => o.id !== id);
+                renderApp();
+            }
+        }
+
+        /* --- FONCTIONS GESTION COURANT & MODALS --- */
         function injectPrevision(prevId) {
             const prev = previsions.find(p => p.id === prevId);
             if (!prev) return;
@@ -643,6 +933,7 @@
                 document.getElementById('prev-id').value = '';
             }
             modal.classList.remove('hidden');
+            refreshIcons();
         }
 
         function closeModalPrevision() {
@@ -711,6 +1002,7 @@
                 }
             }
             modal.classList.remove('hidden');
+            refreshIcons();
         }
 
         function closeModalOperation() {
