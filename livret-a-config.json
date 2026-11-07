@@ -1,0 +1,19 @@
+{
+  "operations": [
+    {
+      "id": "1794038032892",
+      "title": "Solde",
+      "amount": 504,
+      "type": "deposit",
+      "date": "2026-10-24"
+    },
+    {
+      "id": "1794038055818",
+      "title": "Compte CE",
+      "amount": 490,
+      "type": "deposit",
+      "date": "2026-11-06"
+    }
+  ],
+  "lastUpdate": "2026-11-07T07:56:39.470Z"
+}
