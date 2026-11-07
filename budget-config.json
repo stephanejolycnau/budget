@@ -172,6 +172,16 @@
       "order": 19
     }
   ],
-  "operations": [],
-  "lastUpdate": "2026-11-07T08:23:36.423Z"
+  "operations": [
+    {
+      "id": "1794039995486",
+      "title": "Solde au 07/11/2026",
+      "amount": 428.12,
+      "type": "income",
+      "date": "2026-11-07",
+      "category": "Autre",
+      "pointed": true
+    }
+  ],
+  "lastUpdate": "2026-11-07T08:26:52.110Z"
 }
