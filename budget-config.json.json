@@ -1,0 +1,59 @@
+{
+  "previsions": [
+    {
+      "id": "1",
+      "title": "Salaire / Revenu principal",
+      "amount": 2527.40,
+      "type": "income",
+      "day": 24,
+      "category": "Salaire / Revenu",
+      "order": 1
+    },
+    {
+      "id": "2",
+      "title": "Location garage",
+      "amount": 132.00,
+      "type": "expense",
+      "day": 1,
+      "category": "Logement",
+      "order": 2
+    },
+    {
+      "id": "3",
+      "title": "Prêt Igesa",
+      "amount": 131.33,
+      "type": "expense",
+      "day": 1,
+      "category": "Crédit",
+      "order": 3
+    },
+    {
+      "id": "4",
+      "title": "Bouygues Télécom Bbox Fibre",
+      "amount": 44.39,
+      "type": "expense",
+      "day": 31,
+      "category": "Factures / Énergie",
+      "order": 4
+    },
+    {
+      "id": "5",
+      "title": "Netflix",
+      "amount": 14.99,
+      "type": "expense",
+      "day": 4,
+      "category": "Abonnements",
+      "order": 5
+    },
+    {
+      "id": "6",
+      "title": "ENI (Énergie)",
+      "amount": 101.04,
+      "type": "expense",
+      "day": 7,
+      "category": "Logement",
+      "order": 6
+    }
+  ],
+  "operations": []
+}
