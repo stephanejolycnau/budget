@@ -325,7 +325,7 @@
     {
       "id": "1794068617468",
       "title": "La scala",
-      "amount": 34,
+      "amount": 38,
       "type": "expense",
       "date": "2026-12-05",
       "category": "Loisirs / Sorties",
@@ -404,5 +404,5 @@
       "pointed": false
     }
   ],
-  "lastUpdate": "2026-11-08T14:23:07.769Z"
+  "lastUpdate": "2026-11-08T14:29:45.635Z"
 }
