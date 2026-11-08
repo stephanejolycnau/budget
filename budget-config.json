@@ -384,7 +384,25 @@
       "date": "2026-12-05",
       "category": "Transport / Carburant",
       "pointed": false
+    },
+    {
+      "id": "1794147591766",
+      "title": "Bitstack",
+      "amount": 25.51,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Placement",
+      "pointed": false
+    },
+    {
+      "id": "1794147690978",
+      "title": "Endodentiste",
+      "amount": 250,
+      "type": "expense",
+      "date": "2026-11-15",
+      "category": "Santé",
+      "pointed": false
     }
   ],
-  "lastUpdate": "2026-11-07T16:28:07.332Z"
+  "lastUpdate": "2026-11-08T14:23:07.769Z"
 }
