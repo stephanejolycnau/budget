@@ -120,7 +120,7 @@
     {
       "id": "1794039509705",
       "title": "ENI",
-      "amount": 101.04,
+      "amount": 90.09,
       "type": "expense",
       "day": 5,
       "category": "Factures / Énergie",
@@ -422,5 +422,5 @@
       "pointed": false
     }
   ],
-  "lastUpdate": "2026-11-09T06:02:52.161Z"
+  "lastUpdate": "2026-11-09T09:54:32.480Z"
 }
