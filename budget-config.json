@@ -402,7 +402,25 @@
       "date": "2026-11-15",
       "category": "Santé",
       "pointed": false
+    },
+    {
+      "id": "1794204125906",
+      "title": "Amazon Noel Flo et consommables zippo",
+      "amount": 94.96,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Autre",
+      "pointed": false
+    },
+    {
+      "id": "1794204145457",
+      "title": "Cinéma",
+      "amount": 14,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Loisirs / Sorties",
+      "pointed": false
     }
   ],
-  "lastUpdate": "2026-11-08T14:29:45.635Z"
+  "lastUpdate": "2026-11-09T06:02:52.161Z"
 }
