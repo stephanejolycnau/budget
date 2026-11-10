@@ -420,7 +420,37 @@
       "date": "2026-12-05",
       "category": "Loisirs / Sorties",
       "pointed": false
+    },
+    {
+      "id": "1794289946179",
+      "title": "Crédit CE",
+      "amount": 134.04,
+      "type": "expense",
+      "date": "2026-11-10",
+      "category": "Crédit",
+      "pointed": true,
+      "previsionId": "1794039551729"
+    },
+    {
+      "id": "1794289962741",
+      "title": "Ordures ménagères",
+      "amount": 26.83,
+      "type": "expense",
+      "date": "2026-11-10",
+      "category": "Logement",
+      "pointed": true,
+      "previsionId": "1794039584001"
+    },
+    {
+      "id": "1794289989063",
+      "title": "BPCE Vie - Assurance vie",
+      "amount": 9.39,
+      "type": "expense",
+      "date": "2026-11-10",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1794039387745"
     }
   ],
-  "lastUpdate": "2026-11-09T09:54:32.480Z"
+  "lastUpdate": "2026-11-10T05:53:49.712Z"
 }
