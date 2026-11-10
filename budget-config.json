@@ -329,7 +329,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Loisirs / Sorties",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794068647103",
@@ -338,7 +338,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Placement",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794068669976",
@@ -347,7 +347,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Placement",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794068693473",
@@ -356,7 +356,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794068718344",
@@ -365,7 +365,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794068822358",
@@ -374,7 +374,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Transport / Carburant",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794068867143",
@@ -383,7 +383,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Transport / Carburant",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794147591766",
@@ -392,7 +392,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Placement",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794147690978",
@@ -419,7 +419,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Loisirs / Sorties",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794289946179",
@@ -452,5 +452,5 @@
       "previsionId": "1794039387745"
     }
   ],
-  "lastUpdate": "2026-11-10T05:53:49.712Z"
+  "lastUpdate": "2026-11-10T18:14:16.183Z"
 }
