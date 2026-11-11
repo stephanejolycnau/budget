@@ -450,7 +450,16 @@
       "category": "Assurance",
       "pointed": true,
       "previsionId": "1794039387745"
+    },
+    {
+      "id": "1794393363728",
+      "title": "Fresh",
+      "amount": 31.74,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": false
     }
   ],
-  "lastUpdate": "2026-11-10T18:14:16.183Z"
+  "lastUpdate": "2026-11-11T10:36:30.441Z"
 }
