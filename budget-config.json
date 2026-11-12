@@ -459,7 +459,16 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": false
+    },
+    {
+      "id": "1794461766643",
+      "title": "Gocardless remboursement Eni",
+      "amount": 48.94,
+      "type": "income",
+      "date": "2026-11-11",
+      "category": "Factures / Énergie",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-11T10:36:30.441Z"
+  "lastUpdate": "2026-11-12T05:36:41.896Z"
 }
