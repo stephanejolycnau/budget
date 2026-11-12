@@ -468,7 +468,16 @@
       "date": "2026-11-11",
       "category": "Factures / Énergie",
       "pointed": true
+    },
+    {
+      "id": "1794483798192",
+      "title": "Compte bitstack",
+      "amount": 50,
+      "type": "expense",
+      "date": "2026-11-12",
+      "category": "Autre",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-12T05:36:41.896Z"
+  "lastUpdate": "2026-11-12T11:43:23.486Z"
 }
