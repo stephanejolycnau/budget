@@ -410,7 +410,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Autre",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794204145457",
@@ -458,7 +458,7 @@
       "type": "expense",
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794461766643",
@@ -477,7 +477,16 @@
       "date": "2026-11-12",
       "category": "Autre",
       "pointed": true
+    },
+    {
+      "id": "1794549719943",
+      "title": "Super U",
+      "amount": 206.24,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-12T11:43:23.486Z"
+  "lastUpdate": "2026-11-13T06:02:24.848Z"
 }
