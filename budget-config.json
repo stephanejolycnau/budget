@@ -158,7 +158,7 @@
       "title": "Bouquet liberté CE",
       "amount": 21.3,
       "type": "expense",
-      "day": 10,
+      "day": 15,
       "category": "Abonnements",
       "order": 18
     },
@@ -488,5 +488,5 @@
       "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-13T06:02:24.848Z"
+  "lastUpdate": "2026-11-14T12:38:59.120Z"
 }
