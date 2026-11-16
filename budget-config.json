@@ -504,7 +504,17 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": true
+    },
+    {
+      "id": "1794848732057",
+      "title": "Assurance 206 Catherine",
+      "amount": 15.57,
+      "type": "income",
+      "date": "2026-11-16",
+      "category": "Assurance",
+      "pointed": true,
+      "previsionId": "1794039635698"
     }
   ],
-  "lastUpdate": "2026-11-16T10:52:26.169Z"
+  "lastUpdate": "2026-11-16T17:05:55.146Z"
 }
