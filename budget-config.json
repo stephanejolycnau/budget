@@ -486,7 +486,16 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": true
+    },
+    {
+      "id": "1794818590010",
+      "title": "Bitstack",
+      "amount": 2.74,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Placement",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-14T12:38:59.120Z"
+  "lastUpdate": "2026-11-16T08:43:43.254Z"
 }
