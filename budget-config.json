@@ -514,7 +514,16 @@
       "category": "Assurance",
       "pointed": true,
       "previsionId": "1794039635698"
+    },
+    {
+      "id": "1794924912969",
+      "title": "Super U",
+      "amount": 50.05,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-16T17:05:55.146Z"
+  "lastUpdate": "2026-11-17T14:15:17.734Z"
 }
