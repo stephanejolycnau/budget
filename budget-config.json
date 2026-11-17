@@ -399,7 +399,7 @@
       "title": "Endodentiste",
       "amount": 250,
       "type": "expense",
-      "date": "2026-11-15",
+      "date": "2026-11-18",
       "category": "Santé",
       "pointed": false
     },
@@ -523,7 +523,17 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": true
+    },
+    {
+      "id": "1794925007175",
+      "title": "Bouquet liberté CE",
+      "amount": 21.3,
+      "type": "expense",
+      "date": "2026-11-17",
+      "category": "Abonnements",
+      "pointed": true,
+      "previsionId": "1794039608547"
     }
   ],
-  "lastUpdate": "2026-11-17T14:15:17.734Z"
+  "lastUpdate": "2026-11-17T14:18:05.629Z"
 }
