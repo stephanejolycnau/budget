@@ -533,7 +533,16 @@
       "category": "Abonnements",
       "pointed": true,
       "previsionId": "1794039608547"
+    },
+    {
+      "id": "1794978313433",
+      "title": "Uneo",
+      "amount": 37.13,
+      "type": "expense",
+      "date": "2026-11-18",
+      "category": "Santé",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-17T14:18:05.629Z"
+  "lastUpdate": "2026-11-18T05:05:21.043Z"
 }
