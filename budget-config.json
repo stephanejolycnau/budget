@@ -542,7 +542,16 @@
       "date": "2026-11-18",
       "category": "Santé",
       "pointed": true
+    },
+    {
+      "id": "1795197771017",
+      "title": "Super U",
+      "amount": 203.52,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-20T04:25:33.144Z"
+  "lastUpdate": "2026-11-20T18:03:21.679Z"
 }
