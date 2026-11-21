@@ -551,7 +551,16 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": true
+    },
+    {
+      "id": "1795243654118",
+      "title": "Super U",
+      "amount": 1.99,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-20T18:03:21.679Z"
+  "lastUpdate": "2026-11-21T06:47:36.910Z"
 }
