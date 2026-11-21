@@ -401,7 +401,7 @@
       "type": "expense",
       "date": "2026-11-18",
       "category": "Santé",
-      "pointed": false
+      "pointed": true
     },
     {
       "id": "1794204125906",
@@ -560,7 +560,25 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": true
+    },
+    {
+      "id": "1795263790018",
+      "title": "Livret A",
+      "amount": 180,
+      "type": "income",
+      "date": "2026-11-21",
+      "category": "Placement",
+      "pointed": true
+    },
+    {
+      "id": "1795263808583",
+      "title": "Axel Noel",
+      "amount": 180,
+      "type": "expense",
+      "date": "2026-11-21",
+      "category": "Autre",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-21T06:47:36.910Z"
+  "lastUpdate": "2026-11-21T12:23:35.578Z"
 }
