@@ -13,7 +13,14 @@
       "amount": 490,
       "type": "deposit",
       "date": "2026-11-06"
+    },
+    {
+      "id": "1795263838532",
+      "title": "Compte courant",
+      "amount": 180,
+      "type": "withdrawal",
+      "date": "2026-11-21"
     }
   ],
-  "lastUpdate": "2026-11-16T08:45:27.410Z"
+  "lastUpdate": "2026-11-21T12:24:11.118Z"
 }
