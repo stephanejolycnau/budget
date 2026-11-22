@@ -578,7 +578,16 @@
       "date": "2026-11-21",
       "category": "Autre",
       "pointed": true
+    },
+    {
+      "id": "1795357214288",
+      "title": "Bitstack",
+      "amount": 3,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Placement",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-21T12:23:35.578Z"
+  "lastUpdate": "2026-11-22T14:20:17.511Z"
 }
