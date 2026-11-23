@@ -587,7 +587,17 @@
       "date": "2026-12-05",
       "category": "Placement",
       "pointed": true
+    },
+    {
+      "id": "1795403126451",
+      "title": "CATG",
+      "amount": 2647.09,
+      "type": "income",
+      "date": "2026-12-01",
+      "category": "Salaire / Revenu",
+      "pointed": true,
+      "previsionId": "1794039082061"
     }
   ],
-  "lastUpdate": "2026-11-22T14:20:17.511Z"
+  "lastUpdate": "2026-11-23T03:06:43.707Z"
 }
