@@ -597,7 +597,16 @@
       "category": "Salaire / Revenu",
       "pointed": true,
       "previsionId": "1794039082061"
+    },
+    {
+      "id": "1795543366636",
+      "title": "Fresh",
+      "amount": 21.27,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-23T03:06:43.707Z"
+  "lastUpdate": "2026-11-24T18:02:55.457Z"
 }
