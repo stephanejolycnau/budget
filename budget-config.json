@@ -643,7 +643,16 @@
       "date": "2026-12-05",
       "category": "Autre",
       "pointed": true
+    },
+    {
+      "id": "1795795787489",
+      "title": "Axel",
+      "amount": 300,
+      "type": "income",
+      "date": "2026-11-27",
+      "category": "Autre",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-27T03:30:21.372Z"
+  "lastUpdate": "2026-11-27T16:09:57.254Z"
 }
