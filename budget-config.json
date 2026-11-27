@@ -616,7 +616,34 @@
       "category": "Abonnements",
       "pointed": true,
       "previsionId": "1794039416411"
+    },
+    {
+      "id": "1795749989994",
+      "title": "Amazon catadiope+filtre Kiki",
+      "amount": 24.73,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Autre",
+      "pointed": true
+    },
+    {
+      "id": "1795750023551",
+      "title": "Burger king",
+      "amount": 55.95,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
+    },
+    {
+      "id": "1795750057225",
+      "title": "Amazon gourde Axel",
+      "amount": 25.95,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Autre",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-25T05:08:24.439Z"
+  "lastUpdate": "2026-11-27T03:30:11.789Z"
 }
