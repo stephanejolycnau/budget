@@ -652,7 +652,25 @@
       "date": "2026-11-27",
       "category": "Autre",
       "pointed": true
+    },
+    {
+      "id": "1795795833943",
+      "title": "Super U",
+      "amount": 3.9,
+      "type": "expense",
+      "date": "2026-12-01",
+      "category": "Transport / Carburant",
+      "pointed": true
+    },
+    {
+      "id": "1795795858322",
+      "title": "Super U",
+      "amount": 297.67,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Alimentation / Courses",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-27T16:09:57.254Z"
+  "lastUpdate": "2026-11-27T16:11:20.353Z"
 }
