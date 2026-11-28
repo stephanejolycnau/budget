@@ -670,7 +670,16 @@
       "date": "2026-12-05",
       "category": "Alimentation / Courses",
       "pointed": true
+    },
+    {
+      "id": "1795874432458",
+      "title": "Maxxess",
+      "amount": 340.14,
+      "type": "expense",
+      "date": "2026-12-05",
+      "category": "Autre",
+      "pointed": true
     }
   ],
-  "lastUpdate": "2026-11-27T16:11:20.353Z"
+  "lastUpdate": "2026-11-28T14:00:37.146Z"
 }
